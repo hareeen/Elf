@@ -96,6 +96,7 @@
         alert(errorMessage);
       });
       if(firebase.auth().currentUser != null) {
+        alert("a");
         var user=firebase.auth().currentUser;
         user.updateProfile({
           displayName: username,

@@ -47,22 +47,33 @@
       <div class="row align-items-center" id="signin_row">
         <div class="col"></div>
         <div class="col-7">
-          <h1 class="display-4">Settings</h1>
-          <p class="lead">Update profile, Sign out and User deletion</p>
+          <h1 class="display-4" id="displayName"></h1>
+          <p class="lead" id="LearnorTeach"></p>
+          <button type="button" class="btn btn-dark btn-block" id="SignoutButton">Sign Out</button>
         </div>
         <div class="col"></div>
       </div>
     </div>
   </body>
   <script type="text/javascript">
+    var signout=0;
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-
+        $("#displayName").html(user.displayName);
+        $("#LearnorTeach").html(user.photoURL);
       }
       else {
-        alert("Please sign in first.")
-        window.location.replace("signin.html");
+        if(signout===0) {
+          alert("Please sign in first.")
+          window.location.replace("signin.html");
+        }
       }
+    });
+    $("#SignoutButton").click(function(){
+      signout=1;
+      firebase.auth().signOut();
+      alert("Sign out complete.");
+      window.location.replace("index.html")
     });
   </script>
 </html>
