@@ -49,6 +49,10 @@
         <div class="col-7">
           <h1 class="display-4">Sign Up</h1>
           <p class="lead">The first step to become an elf.</p>
+          <div class="btn-group d-flex mb-3" role="group">
+            <button type="button" class="btn btn-dark w-100" id="sel_teacher">Teacher</button>
+            <button type="button" class="btn btn-outline-dark w-100" id="sel_student">Student</button>
+          </div>
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Username" id="username_UP">
           </div>
@@ -69,6 +73,7 @@
   </body>
   <script type="text/javascript">
     var newsign=0;
+    var sel="Teacher";
     firebase.auth().onAuthStateChanged(function(user) {
       if (user && newsign===0) {
         window.location.replace("index.html")
@@ -92,13 +97,23 @@
       if(firebase.auth().currentUser != null) {
         var user=firebase.auth().currentUser;
         user.updateProfile({
-          displayName: username
+          displayName: username,
+          photoURL: sel
         }).then(function(){
           alert("Signup complete.");
           window.location.replace("index.html");
         });
       }
     });
-
+    $("#sel_student").click(function(){
+      sel="Student";
+      $("#sel_teacher").attr('class','btn btn-outline-dark w-100');
+      $("#sel_student").attr('class','btn btn-dark w-100');
+    });
+    $("#sel_teacher").click(function(){
+      sel="Teacher";
+      $("#sel_student").attr('class','btn btn-outline-dark w-100');
+      $("#sel_teacher").attr('class','btn btn-dark w-100');
+    });
   </script>
 </html>
