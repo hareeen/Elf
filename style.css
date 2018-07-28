@@ -1,0 +1,16 @@
+.display-1 {
+  text-align: center;
+}
+#signin_row, #index_row, html, body, body>.container-fluid {
+  margin:auto;
+  height:100%;
+}
+body>.container-fluid {
+  padding:0;
+}
+#index_row>.col>p {
+  margin: auto;
+  text-align: center;
+  width: 100%;
+  font-size: 2rem;
+}
