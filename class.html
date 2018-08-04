@@ -155,9 +155,28 @@
       var classname=$("#Name_JC").val();
       var Ref=db.collection("Classes").doc(classname);
       var docdata;
-      docRef.get().then(function(doc) {
+      Ref.get().then(function(doc) {
         if (doc.exists) {
           docdata=doc.data();
+          if(accesstoken!=docdata["token"]) {
+            alert("Enter the token properly.");
+            return;
+          }
+          docdata["members"]["StudentName"].push(user.displayName);
+          docdata["members"]["StudentUid"].push(user.uid);
+          Ref.update({
+            members: {
+              TeacherName:docdata["members"]["TeacherName"],
+              TeacherUid:docdata["members"]["TeacherUid"],
+              StudentName:docdata["members"]["StudentName"],
+              StudentUid:docdata["members"]["StudentUid"]
+            }
+          }).then(function(){
+            alert('Class joining complete.');
+          }).catch(function(){
+            var errorMessage=error.message;
+            alert(errorMessage);
+          });
         }
         else {
           alert("No class named '"+classname+"'. Please check again.");
@@ -165,26 +184,7 @@
       }).catch(function(error) {
         var errorMessage=error.message;
         alert(errorMessage);
-      });
-      if(accesstoken!=docdata["token"]) {
-        alert("Enter the token properly.");
-        return;
-      }
-      docdata["members"]["StudentName"].push(user.displayName);
-      docdata["members"]["StudentUid"].push(user.uid);
-      Ref.update({
-        members: {
-          TeacherName:docdata["members"]["TeacherName"],
-          TeacherUid:docdata["members"]["TeacherUid"],
-          StudentName:docdata["members"]["StudentName"],
-          StudentUid:docdata["members"]["StudentUid"]
-        }
-      }).then(function(){
-        alert('Class joining complete.');
-      }).catch(function(){
-        var errorMessage=error.message;
-        alert(errorMessage);
-      });
+      });  
     });
   </script>
 </html>
