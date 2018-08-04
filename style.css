@@ -1,7 +1,7 @@
 .display-1 {
   text-align: center;
 }
-#signin_row, #index_row, html, body, body>.container-fluid {
+#default_row, #index_row, html, body, body>.container-fluid {
   margin:auto;
   height:100%;
 }
