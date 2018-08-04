@@ -33,10 +33,10 @@
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="#">Home</a>
+            <a class="nav-link" href="index.html">Home</a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="class.html">Class</a>
+            <a class="nav-link" href="#">Class</a>
           </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
@@ -51,7 +51,7 @@
           <h1 class="display-4">Class Management</h1>
           <p class="lead">Create, join, and share!!</p>
           <button type="button" class="btn btn-dark btn-block mb-3" id="CreateClass">Create Class</button>
-          <button type="button" class="btn btn-dark btn-block mb-3" id="JoinClass">Join Class</button>
+          <button type="button" class="btn btn-dark btn-block" id="JoinClass">Join Class</button>
         </div>
         <div class="col"></div>
       </div>
@@ -69,6 +69,9 @@
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
         $("#SignInandSetting").html(user.displayName);
+        if(user.photoURL==="Student") {
+          $("#CreateClass").attr('disabled','');
+        }
       } else {
         // No user is signed in.
       }
