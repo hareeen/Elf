@@ -89,6 +89,7 @@
       $("#DelUserModal").modal();
     });
     $("#RealDelete").click(function(){
+      signout=1;
       var user=firebase.auth().currentUser;
       var email=$("#email_UD").val();
       var password=$("#password_UD").val();
