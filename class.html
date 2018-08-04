@@ -56,8 +56,32 @@
         <div class="col"></div>
       </div>
     </div>
+    <div class="modal fade" id="CCModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">New Class</h5>
+          </div>
+          <div class="modal-body">
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="Class Name" id="name_CC">
+            </div>
+            <div class="input-group mb-3">
+              <input type="password" class="form-control" placeholder="Password" id="password_UD">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-danger" id="RealDelete">Delete User</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
   <script type="text/javascript">
+    var gentoken = function() {
+      return Math.random().toString(36).substr(2)+Math.random().toString(36).substr(2); // remove `0.`
+    };
     $("#SignInandSetting").click(function() {
       if(firebase.auth().currentUser != null) {
         window.location.replace('usersetting.html')
@@ -73,8 +97,16 @@
           $("#CreateClass").attr('disabled','');
         }
       } else {
-        // No user is signed in.
+        alert("Please sign in first.")
+        window.location.replace("signin.html");
       }
+    });
+    $("#CreateClass").click(function(){
+      if(firebase.auth().currentUser.photoURL==="Student") {
+        alert("Student cannot create classes.");
+        return;
+      }
+
     });
   </script>
 </html>
