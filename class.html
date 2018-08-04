@@ -61,7 +61,7 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">New Class</h5>
+            <h5 class="modal-title">Create Class</h5>
           </div>
           <div class="modal-body">
             <div class="input-group">
@@ -71,6 +71,27 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             <button type="button" class="btn btn-dark" id="RealCC">Create Class</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="JCModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Join Class</h5>
+          </div>
+          <div class="modal-body">
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="Class Name" id="Name_JC">
+            </div>
+            <div class="input-group">
+              <input type="password" class="form-control" placeholder="Access Token" id="Token_JC">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-dark" id="RealJC">Join Class</button>
           </div>
         </div>
       </div>
@@ -107,17 +128,60 @@
       $("#CCModal").modal();
     });
     $("#RealCC").click(function(){
+      var user=firebase.auth().currentUser;
       var classname=$("#Name_CC").val();
-      db.collection("cities").doc(classname).set({
+      db.collection("Classes").doc(classname).set({
           name: classname,
           token: gentoken(),
           members: {
-              Teacher:[firebase.auth().currentUser.displayName],
-              Student:[]
+            TeacherName:[user.displayName],
+            TeacherUid:[user.uid],
+            StudentName:[],
+            StudentUid:[]
           }
       }).then(function(){
         alert('Class creation complete.')
       }).catch(function(error){
+        var errorMessage=error.message;
+        alert(errorMessage);
+      });
+    });
+    $("#JoinClass").click(function(){
+      $("#JCModal").modal();
+    });
+    $("#RealJC").click(function(){
+      var user=firebase.auth().currentUser;
+      var accesstoken=$("#Token_JC").val();
+      var classname=$("#Name_JC").val();
+      var Ref=db.collection("Classes").doc(classname);
+      var docdata;
+      docRef.get().then(function(doc) {
+        if (doc.exists) {
+          docdata=doc.data();
+        }
+        else {
+          alert("No class named '"+classname+"'. Please check again.");
+        }
+      }).catch(function(error) {
+        var errorMessage=error.message;
+        alert(errorMessage);
+      });
+      if(accesstoken!=docdata["token"]) {
+        alert("Enter the token properly.");
+        return;
+      }
+      docdata["members"]["StudentName"].push(user.displayName);
+      docdata["members"]["StudentUid"].push(user.uid);
+      Ref.update({
+        members: {
+          TeacherName:docdata["members"]["TeacherName"],
+          TeacherUid:docdata["members"]["TeacherUid"],
+          StudentName:docdata["members"]["StudentName"],
+          StudentUid:docdata["members"]["StudentUid"]
+        }
+      }).then(function(){
+        alert('Class joining complete.');
+      }).catch(function(){
         var errorMessage=error.message;
         alert(errorMessage);
       });
