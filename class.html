@@ -63,16 +63,13 @@
             <h5 class="modal-title">New Class</h5>
           </div>
           <div class="modal-body">
-            <div class="input-group mb-3">
-              <input type="text" class="form-control" placeholder="Class Name" id="name_CC">
-            </div>
-            <div class="input-group mb-3">
-              <input type="password" class="form-control" placeholder="Password" id="password_UD">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Class Name" id="Name_CC">
             </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-danger" id="RealDelete">Delete User</button>
+            <button type="button" class="btn btn-dark" id="RealCC">Create Class</button>
           </div>
         </div>
       </div>
@@ -106,7 +103,23 @@
         alert("Student cannot create classes.");
         return;
       }
-
+      $("#CCModal").modal();
+    });
+    $("#RealCC").click(function(){
+      var classname=$("#Name_CC").val();
+      db.collection("cities").doc(classname).set({
+          name: classname,
+          token: gentoken(),
+          members: {
+              Teacher:[firebase.auth().currentUser.displayName],
+              Student:[]
+          }
+      }).then(function(){
+        alert('Class creation complete.')
+      }).catch(function(error){
+        var errorMessage=error.message;
+        alert(errorMessage);
+      });
     });
   </script>
 </html>
