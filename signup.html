@@ -84,12 +84,7 @@
         return;
       }
       $("#SignUp").html("Please Wait...");
-      firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        alert(errorMessage);
-      });
-      if(firebase.auth().currentUser != null) {
+      firebase.auth().createUserWithEmailAndPassword(email, password).then(function() {
         var user=firebase.auth().currentUser;
         user.updateProfile({
           displayName: username,
@@ -98,7 +93,11 @@
           alert("Signup complete.");
           window.location.replace("index.html");
         });
-      }
+      }).catch(function(error) {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        alert(errorMessage);
+      });
     });
     $("#sel_student").click(function(){
       sel="Student";
