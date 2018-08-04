@@ -108,7 +108,7 @@
     });
     $("#RealCC").click(function(){
       var classname=$("#Name_CC").val();
-      db.collection("cities").doc(classname).set({
+      db.collection("Classes").doc(classname).set({
           name: classname,
           token: gentoken(),
           members: {
