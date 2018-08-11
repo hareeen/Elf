@@ -94,8 +94,8 @@
           displayName: username,
           photoURL: sel
         }).then(function(){
-          alert("Signup complete.");
-          window.location.replace("index.html");
+          alert("Signup complete. Please verify your account.");
+          window.location.replace("usersetting.html");
         });
       }).catch(function(error) {
         var errorCode = error.code;

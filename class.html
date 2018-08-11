@@ -141,7 +141,9 @@
             TeacherUid:[user.uid],
             StudentName:[],
             StudentUid:[]
-          }
+          },
+          parent: "",
+          childs: []
       }).then(function(){
         var Ref=db.collection("Users").doc(user.uid);
         var classList=[];

@@ -47,6 +47,9 @@
         <div class="col-7">
           <h1 class="display-4" id="displayName"></h1>
           <p class="lead" id="LearnorTeach"></p>
+          <div class="alert alert-danger mb-3" role="alert" id="verifyAlert" style="display:none;">
+            Your email is not verified. Click <a href="#" class="alert-link" id="sendverifyEmail">here</a> to verify your email.
+          </div>
           <button type="button" class="btn btn-dark btn-block mb-3" id="SignoutButton">Sign Out</button>
           <button type="button" class="btn btn-danger btn-block" id="DelUserButton">Delete User</button>
         </div>
@@ -81,6 +84,9 @@
       if (user) {
         $("#displayName").html(user.displayName);
         $("#LearnorTeach").html(user.photoURL);
+        if(!user.emailVerified) {
+          $("#verifyAlert").attr('style', '');
+        }
       }
       else {
         if(signout===0) {
@@ -91,6 +97,26 @@
     });
     $("#DelUserButton").click(function(){
       $("#DelUserModal").modal();
+    });
+    $("#sendverifyEmail").click(function(){
+      var actionCodeSettings = {
+        handleCodeInApp: true,
+        iOS: {
+          bundleId: 'com.example.ios'
+        },
+        android: {
+          packageName: 'com.example.android',
+          installApp: true,
+          minimumVersion: '12'
+        }
+      };
+      firebase.auth().sendSignInLinkToEmail(email, actionCodeSettings).then(function(){
+        alert("Verification email sent.")
+      })
+      .catch(function(error) {
+        var errorMessage=error.message;
+        alert(errorMessage);
+      });
     });
     $("#RealDelete").click(function(){
       signout=1;
