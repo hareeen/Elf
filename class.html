@@ -22,6 +22,8 @@
       };
       firebase.initializeApp(config);
       var db=firebase.firestore();
+      const settings = {timestampsInSnapshots: true};
+      db.settings(settings);
     </script>
     <title>Elf</title>
   </head>
@@ -150,9 +152,9 @@
             }
           }
           classList.push(ds);
-          Ref.update({
+          Ref.set({
             Classes:classList
-          }).then(function(){
+          }, {merge:true}).then(function(){
             alert('Class creation complete.')
           }).catch(function(error) {
             var errorMessage=error.message;
@@ -168,6 +170,7 @@
       });
     });
     $("#JoinClass").click(function(){
+      var user=firebase.auth().currentUser;
       if(user.photoURL==="Student") {
         $("#Token_JC").attr('style', 'display:none;');
         $("#Real_JC").attr('class', 'input-group');
@@ -217,9 +220,9 @@
                 }
               }
               classList.push(ds);
-              Ref.update({
+              Ref.set({
                 Classes:classList
-              }).then(function(){
+              }, {merge:true}).then(function(){
                 alert('Class joining complete.')
               }).catch(function(error) {
                 var errorMessage=error.message;
