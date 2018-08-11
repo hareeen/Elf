@@ -103,11 +103,7 @@
     });
     $("#sendverifyEmail").click(function(){
       var user=firebase.auth().currentUser;
-      var actionCodeSettings = {
-        handleCodeInApp: true,
-        url: "https://elf-171bb.firebaseapp.com/usersetting.html"
-      };
-      firebase.auth().sendSignInLinkToEmail(user.email, actionCodeSettings).then(function(){
+      firebase.auth().sendEmailVerification().then(function(){
         alert("Verification email sent.")
       })
       .catch(function(error) {
