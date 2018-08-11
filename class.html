@@ -153,7 +153,7 @@
           }
           classList.push(ds);
           Ref.set({
-            name:user.displayName,
+            username:user.displayName,
             Classes:classList
           }, {merge:true}).then(function(){
             alert('Class creation complete.')
@@ -190,6 +190,7 @@
           if(user.photoURL==="Student") {
             if(docdata["members"]["StudentUid"].includes(user.uid)) {
               alert("You already joined this class!")
+              return;
             }
             docdata["members"]["StudentName"].push(user.displayName);
             docdata["members"]["StudentUid"].push(user.uid);
@@ -199,7 +200,8 @@
               return;
             }
             if(docdata["members"]["TeacherUid"].includes(user.uid)) {
-              alert("You already joined this class!")
+              alert("You already joined this class!");
+              return;
             }
             docdata["members"]["TeacherName"].push(user.displayName);
             docdata["members"]["TeacherUid"].push(user.uid);
@@ -220,7 +222,7 @@
                   classList=doc["Classes"];
                 }
               }
-              classList.push(ds);
+              classList.push(classID);
               Ref.set({
                 name:user.displayName,
                 Classes:classList
