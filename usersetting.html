@@ -114,10 +114,15 @@
       });
     });
     $("#SignoutButton").click(function(){
-      signout=1;
-      firebase.auth().signOut();
-      alert("Sign out complete.");
-      window.location.replace("index.html")
+      signout = Math.floor(Math.random() * 2)
+      if(signout===1) {
+        firebase.auth().signOut();
+        alert("Sign out complete.");
+        window.location.replace("index.html")
+      }
+      else {
+        alert("Sorry. You can't sign out. Please try again.")
+      }
     });
   </script>
 </html>
