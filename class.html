@@ -83,10 +83,10 @@
           </div>
           <div class="modal-body">
             <div class="input-group mb-3">
-              <input type="text" class="form-control" placeholder="Class Name" id="Name_JC">
+              <input type="text" class="form-control" placeholder="Class ID" id="ID_JC">
             </div>
             <div class="input-group">
-              <input type="password" class="form-control" placeholder="Access Token" id="Token_JC">
+              <input type="password" class="form-control" placeholder="Teacher Token" id="Token_JC">
             </div>
           </div>
           <div class="modal-footer">
@@ -99,7 +99,7 @@
   </body>
   <script type="text/javascript">
     var gentoken = function() {
-      return Math.random().toString(36).substr(2)+Math.random().toString(36).substr(2); // remove `0.`
+      return Math.random().toString(36).substr(2); // remove `0.`
     };
     $("#SignInandSetting").click(function() {
       if(firebase.auth().currentUser != null) {
@@ -130,9 +130,10 @@
     $("#RealCC").click(function(){
       var user=firebase.auth().currentUser;
       var classname=$("#Name_CC").val();
-      db.collection("Classes").doc(classname).set({
+      var ds = (new Date()).toISOString().replace(/[^0-9]/g, "")+"_"+gentoken();
+      db.collection("Classes").doc(ds).set({
           name: classname,
-          token: gentoken(),
+          teacher_token: gentoken(),
           members: {
             TeacherName:[user.displayName],
             TeacherUid:[user.uid],
@@ -140,32 +141,62 @@
             StudentUid:[]
           }
       }).then(function(){
-        alert('Class creation complete.')
+        var Ref=db.collection("Users").doc(user.uid);
+        var classList=[];
+        Ref.get().then(function(doc){
+          if(doc.exists) {
+            if(doc.hasOwnProperty("Classes")) {
+              classList=doc["Classes"];
+            }
+          }
+          classList.push(ds);
+          Ref.update({
+            Classes:classList
+          }).then(function(){
+            alert('Class creation complete.')
+          }).catch(function(error) {
+            var errorMessage=error.message;
+            alert(errorMessage);
+          });
+        }).catch(function(error) {
+          var errorMessage=error.message;
+          alert(errorMessage);
+        });
       }).catch(function(error){
         var errorMessage=error.message;
         alert(errorMessage);
       });
     });
     $("#JoinClass").click(function(){
+      if(user.photoURL==="Student") {
+        $("#Token_JC").attr('style', 'display:none;');
+        $("#Real_JC").attr('class', 'input-group');
+      }
       $("#JCModal").modal();
     });
     $("#RealJC").click(function(){
       var user=firebase.auth().currentUser;
-      var accesstoken=$("#Token_JC").val();
-      var classname=$("#Name_JC").val();
-      var Ref=db.collection("Classes").doc(classname);
+      var Ttoken=$("#Token_JC").val();
+      var classID=$("#ID_JC").val();
+      var Ref=db.collection("Classes").doc(classID);
       var docdata;
       Ref.get().then(function(doc) {
         if (doc.exists) {
           docdata=doc.data();
-          if(accesstoken!=docdata["token"]) {
-            alert("Enter the token properly.");
-            return;
-          }
           if(user.photoURL==="Student") {
+            if(docdata["members"]["StudentUid"].includes(user.uid)) {
+              alert("You already joined this class!")
+            }
             docdata["members"]["StudentName"].push(user.displayName);
             docdata["members"]["StudentUid"].push(user.uid);
           } else {
+            if(Ttoken!=docdata["teacher_token"]) {
+              alert("Enter the token properly.");
+              return;
+            }
+            if(docdata["members"]["TeacherUid"].includes(user.uid)) {
+              alert("You already joined this class!")
+            }
             docdata["members"]["TeacherName"].push(user.displayName);
             docdata["members"]["TeacherUid"].push(user.uid);
           }
@@ -177,14 +208,34 @@
               StudentUid:docdata["members"]["StudentUid"]
             }
           }).then(function(){
-            alert('Class joining complete.');
-          }).catch(function(){
+            var Ref=db.collection("Users").doc(user.uid);
+            var classList=[];
+            Ref.get().then(function(doc){
+              if(doc.exists) {
+                if(doc.hasOwnProperty("Classes")) {
+                  classList=doc["Classes"];
+                }
+              }
+              classList.push(ds);
+              Ref.update({
+                Classes:classList
+              }).then(function(){
+                alert('Class joining complete.')
+              }).catch(function(error) {
+                var errorMessage=error.message;
+                alert(errorMessage);
+              });
+            }).catch(function(error) {
+              var errorMessage=error.message;
+              alert(errorMessage);
+            });
+          }).catch(function(error){
             var errorMessage=error.message;
             alert(errorMessage);
           });
         }
         else {
-          alert("No class named '"+classname+"'. Please check again.");
+          alert("No class. Please check again.");
         }
       }).catch(function(error) {
         var errorMessage=error.message;
