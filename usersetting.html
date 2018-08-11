@@ -83,9 +83,12 @@
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
         $("#displayName").html(user.displayName);
-        $("#LearnorTeach").html(user.photoURL);
+
         if(!user.emailVerified) {
+          $("#LearnorTeach").html(user.photoURL+" <span class='badge badge-danger'>Unverified</span>");
           $("#verifyAlert").attr('style', '');
+        } else {
+          $("#LearnorTeach").html(user.photoURL+" <span class='badge badge-success'>Verified</span>");
         }
       }
       else {
@@ -99,18 +102,12 @@
       $("#DelUserModal").modal();
     });
     $("#sendverifyEmail").click(function(){
+      var user=firebase.auth().currentUser;
       var actionCodeSettings = {
         handleCodeInApp: true,
-        iOS: {
-          bundleId: 'com.example.ios'
-        },
-        android: {
-          packageName: 'com.example.android',
-          installApp: true,
-          minimumVersion: '12'
-        }
+        url: "https://elf-171bb.firebaseapp.com/usersetting.html"
       };
-      firebase.auth().sendSignInLinkToEmail(email, actionCodeSettings).then(function(){
+      firebase.auth().sendSignInLinkToEmail(user.email, actionCodeSettings).then(function(){
         alert("Verification email sent.")
       })
       .catch(function(error) {
