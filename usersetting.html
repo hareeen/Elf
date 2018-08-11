@@ -103,7 +103,7 @@
     });
     $("#sendverifyEmail").click(function(){
       var user=firebase.auth().currentUser;
-      firebase.auth().sendEmailVerification().then(function(){
+      user.sendEmailVerification().then(function(){
         alert("Verification email sent.")
       })
       .catch(function(error) {
