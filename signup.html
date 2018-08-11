@@ -70,6 +70,9 @@
       </div>
   </body>
   <script type="text/javascript">
+    $('input').keyup(function(e) {
+      if (e.keyCode === 13) $("#SignUp").click();
+    });
     var newsign=0;
     var sel="Teacher";
     firebase.auth().onAuthStateChanged(function(user) {
