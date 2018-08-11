@@ -117,6 +117,10 @@
         if(user.photoURL==="Student") {
           $("#CreateClass").attr('disabled','');
         }
+        if(!user.emailVerified) {
+          alert("Please verify your email first.")
+          window.location.replace("usersetting.html");
+        }
       } else {
         alert("Please sign in first.")
         window.location.replace("signin.html");
