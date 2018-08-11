@@ -153,6 +153,7 @@
           }
           classList.push(ds);
           Ref.set({
+            name:user.displayName,
             Classes:classList
           }, {merge:true}).then(function(){
             alert('Class creation complete.')
@@ -221,6 +222,7 @@
               }
               classList.push(ds);
               Ref.set({
+                name:user.displayName,
                 Classes:classList
               }, {merge:true}).then(function(){
                 alert('Class joining complete.')
