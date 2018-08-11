@@ -162,8 +162,13 @@
             alert("Enter the token properly.");
             return;
           }
-          docdata["members"]["StudentName"].push(user.displayName);
-          docdata["members"]["StudentUid"].push(user.uid);
+          if(user.photoURL==="Student") {
+            docdata["members"]["StudentName"].push(user.displayName);
+            docdata["members"]["StudentUid"].push(user.uid);
+          } else {
+            docdata["members"]["TeacherName"].push(user.displayName);
+            docdata["members"]["TeacherUid"].push(user.uid);
+          }
           Ref.update({
             members: {
               TeacherName:docdata["members"]["TeacherName"],
@@ -184,7 +189,7 @@
       }).catch(function(error) {
         var errorMessage=error.message;
         alert(errorMessage);
-      });  
+      });
     });
   </script>
 </html>
