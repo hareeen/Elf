@@ -1,16 +1,51 @@
 .display-1 {
   text-align: center;
 }
-#default_row, #index_row, html, body, body>.container-fluid {
-  margin:auto;
-  height:100%;
+
+#default_row, #index_row, html, body, body>.container-fluid, #intro_row {
+  margin: auto;
+  height: 100%;
 }
+
 body>.container-fluid {
-  padding:0;
+  padding: 0;
 }
+
 #index_row>.col>p {
   margin: auto;
   text-align: center;
   width: 100%;
   font-size: 2rem;
+}
+
+#index_row>.col>button {
+  display: inline-block;
+}
+
+#index_row>.col {
+  text-align: center;
+}
+
+#intro_row {
+  overflow-y: scroll;
+}
+
+#intro_row>.col-7>p {
+  text-align: justify;
+}
+
+.row>.col, .row>.col-7 {
+  overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  background-color: var(--light);
+}
+
+p {
+  color: var(--secondary);
 }

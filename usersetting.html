@@ -1,130 +1,132 @@
 <!DOCTYPE html>
 <html lang="ko" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="elf logo_transparent.png">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
-    <script>
-      // Initialize Firebase
-      var config = {
-        apiKey: "AIzaSyB1yfyT_PozgicExEjiN9yuvtNBIyZwc64",
-        authDomain: "elf-171bb.firebaseapp.com",
-        databaseURL: "https://elf-171bb.firebaseio.com",
-        projectId: "elf-171bb",
-        storageBucket: "",
-        messagingSenderId: "550791088476"
-      };
-      firebase.initializeApp(config);
-    </script>
-    <title>Elf</title>
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand" href="#">Elf</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" href="elf logo_transparent.png">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
+  <script src="core.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyB1yfyT_PozgicExEjiN9yuvtNBIyZwc64",
+      authDomain: "elf-171bb.firebaseapp.com",
+      databaseURL: "https://elf-171bb.firebaseio.com",
+      projectId: "elf-171bb",
+      storageBucket: "",
+      messagingSenderId: "550791088476"
+    };
+    firebase.initializeApp(config);
+  </script>
+  <title>Elf</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="index.html">Elf</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="index.html">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="class.html">Class</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="intro.html">What is Elf?</a>
-        </ul>
-      </div>
-    </nav>
-    <div class="container-fluid">
-      <div class="row align-items-center" id="default_row">
-        <div class="col"></div>
-        <div class="col-7">
-          <h1 class="display-4" id="displayName"></h1>
-          <p class="lead" id="LearnorTeach"></p>
-          <button type="button" class="btn btn-dark btn-block mb-3" id="SignoutButton">Sign Out</button>
-          <button type="button" class="btn btn-danger btn-block" id="DelUserButton">Delete User</button>
-        </div>
-        <div class="col"></div>
-      </div>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="class.html">Class</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="intro.html">What is Elf?</a>
+      </ul>
     </div>
-    <div class="modal fade" id="DelUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Reauthentication</h5>
+  </nav>
+  <div class="container-fluid">
+    <div class="row align-items-center" id="default_row">
+      <div class="col"></div>
+      <div class="col-7">
+        <h1 class="display-4" id="displayName"></h1>
+        <p class="lead" id="LearnorTeach"></p>
+        <button type="button" class="btn btn-dark btn-block mb-3" id="SignoutButton">Sign Out</button>
+        <button type="button" class="btn btn-danger btn-block" id="DelUserButton">Delete User</button>
+      </div>
+      <div class="col"></div>
+    </div>
+  </div>
+  <div class="modal fade" id="DelUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Reauthentication</h5>
+        </div>
+        <div class="modal-body">
+          <div class="input-group mb-3">
+            <input type="email" class="form-control" placeholder="Email" id="email_UD">
           </div>
-          <div class="modal-body">
-            <div class="input-group mb-3">
-              <input type="email" class="form-control" placeholder="Email" id="email_UD">
-            </div>
-            <div class="input-group">
-              <input type="password" class="form-control" placeholder="Password" id="password_UD">
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-danger" id="RealDelete">Delete User</button>
+          <div class="input-group">
+            <input type="password" class="form-control" placeholder="Password" id="password_UD">
           </div>
         </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger" id="RealDelete">Delete User</button>
+        </div>
       </div>
     </div>
-  </body>
-  <script type="text/javascript">
-    var signout=0;
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        $("#displayName").html(user.displayName);
-        $("#LearnorTeach").html(user.photoURL);
+  </div>
+</body>
+<script type="text/javascript">
+  var signout = 0;
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      $("#displayName").html(user.displayName);
+      $("#LearnorTeach").html(user.photoURL);
+    } else {
+      if (signout === 0) {
+        alert("Please sign in.")
+        window.location.replace("signin.html");
       }
-      else {
-        if(signout===0) {
-          alert("Please sign in.")
-          window.location.replace("signin.html");
-        }
-      }
-    });
-    $("#DelUserButton").click(function(){
-      $("#DelUserModal").modal();
-    });
-    $("#RealDelete").click(function(){
-      signout=1;
-      var user=firebase.auth().currentUser;
-      var email=$("#email_UD").val();
-      var password=$("#password_UD").val();
-      var cred=firebase.auth.EmailAuthProvider.credential(email,password);
-      user.reauthenticateWithCredential(cred).then(function() {
-        user.delete().then(function() {
-          alert("User deletion complete. Bye bye...");
-          window.location.replace("index.html");
-        }).catch(function(error) {
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          alert(errorMessage);
-        });
+    }
+  });
+  $("#DelUserButton").click(function() {
+    $("#DelUserModal").modal();
+  });
+  $("#RealDelete").click(function() {
+    signout = 1;
+    var user = firebase.auth().currentUser;
+    var email = $("#email_UD").val();
+    var password = $("#password_UD").val();
+    var cred = firebase.auth.EmailAuthProvider.credential(email, password);
+    user.reauthenticateWithCredential(cred).then(function() {
+      user.delete().then(function() {
+        alert("User deletion complete. Bye bye...");
+        window.location.replace("index.html");
       }).catch(function(error) {
         var errorCode = error.code;
         var errorMessage = error.message;
         alert(errorMessage);
       });
+    }).catch(function(error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      alert(errorMessage);
     });
-    $("#SignoutButton").click(function(){
-      signout = Math.floor(Math.random() * 2)
-      if(signout===1) {
-        firebase.auth().signOut();
-        alert("You are lucky. Sign out complete. ");
-        window.location.replace("index.html")
-      }
-      else {
-        alert("Sorry. Sign out incomplete. Please try again.")
-      }
-    });
-  </script>
+  });
+  $("#SignoutButton").click(function() {
+    signout = Math.floor(Math.random() * 2)
+    if (signout === 1) {
+      firebase.auth().signOut();
+      alert("You are lucky. Sign out complete. ");
+      window.location.replace("index.html")
+    } else {
+      alert("Sorry. Sign out incomplete. Please try again.")
+    }
+  });
+</script>
+
 </html>
