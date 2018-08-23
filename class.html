@@ -167,26 +167,28 @@
       $("#CCModal").modal();
     });
     $("#EnterClass").click(function(){
+      var user=firebase.auth().currentUser;
       var Ref=db.collection("Users").doc(user.uid);
-      Ref.get().then(function(doc) {
+      Ref.get().then(async function(doc) {
         if(doc.exists) {
           var classList=doc.data()["Classes"];
           var htmlString="";
           for(var i=0;i<classList.length;i++) {
             var classname;
-            db.collection("Classes").doc(classList[i]).get().then(function(doc){
+            await db.collection("Classes").doc(classList[i]).get().then(function(doc){
               classname=doc.data()["name"];
-              htmlString+="<tr><th scope='row'>"+i.toString()+
+              htmlString+=("<tr><th scope='row'>"+i.toString()+
               "</th><td>"+classname+
               "</td><td><button type='button' class='btn btn-dark btn-block'"+
-              "onclick=\"Cookies.set('EnteringClass','"+classList[i]+"')\">Go!</button></td>"
+              "onclick=\"Cookies.set('EnteringClass','"+classList[i]+"')\">Go!</button></td></tr>")
+              alert(htmlString);
               return;
             }).catch(function(error) {
               var errorMessage=error.message;
               alert(errorMessage);
             });
-          }
-          $("#ETtbody").html(htmlString);
+          }}
+          await $("#ETtbody").html(htmlString);
         } else {
           alert("You haven't join any classes yet!")
         }
