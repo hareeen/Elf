@@ -66,6 +66,9 @@
   </div>
 </body>
 <script type="text/javascript">
+  $('input').keyup(function(e) {
+    if (e.keyCode === 13) $("#SignIn").click();
+  });
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       alert("Sign in complete.")

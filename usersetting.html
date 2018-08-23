@@ -52,6 +52,9 @@
       <div class="col-7">
         <h1 class="display-4" id="displayName"></h1>
         <p class="lead" id="LearnorTeach"></p>
+        <div class="alert alert-danger mb-3" role="alert" id="verifyAlert" style="display:none;">
+          Your email is not verified. Click <a href="#" class="alert-link" id="sendverifyEmail">here</a> to verify your email.
+        </div>
         <button type="button" class="btn btn-dark btn-block mb-3" id="SignoutButton">Sign Out</button>
         <button type="button" class="btn btn-danger btn-block" id="DelUserButton">Delete User</button>
       </div>
@@ -85,13 +88,28 @@
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       $("#displayName").html(user.displayName);
-      $("#LearnorTeach").html(user.photoURL);
+      if(!user.emailVerified) {
+        $("#LearnorTeach").html(user.photoURL+" <span class='badge badge-danger'>Unverified</span>");
+        $("#verifyAlert").attr('style', '');
+      } else {
+        $("#LearnorTeach").html(user.photoURL+" <span class='badge badge-success'>Verified</span>");
+      }
     } else {
       if (signout === 0) {
         alert("Please sign in.")
         window.location.replace("signin.html");
       }
     }
+  });
+  $("#sendverifyEmail").click(function(){
+    var user=firebase.auth().currentUser;
+    user.sendEmailVerification().then(function(){
+      alert("Verification email sent.")
+    })
+    .catch(function(error) {
+      var errorMessage=error.message;
+      alert(errorMessage);
+    });
   });
   $("#DelUserButton").click(function() {
     $("#DelUserModal").modal();

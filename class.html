@@ -108,6 +108,12 @@
   </div>
 </body>
 <script type="text/javascript">
+  $('#CCModal>input').keyup(function(e) {
+    if (e.keyCode === 13) $("#RealCC").click();
+  });
+  $('#JCModal>input').keyup(function(e) {
+    if (e.keyCode === 13) $("#RealJC").click();
+  });
   var gentoken = function() {
     return Math.random().toString(36).substr(2); // remove `0.`
   };
@@ -123,6 +129,10 @@
       $("#SignInandSetting").html(user.displayName);
       if (user.photoURL === "Student") {
         $("#CreateClass").attr('disabled', '');
+      }
+      if(!user.emailVerified) {
+        alert("Please verify your email first.")
+        window.location.replace("usersetting.html");
       }
     } else {
       alert("Please sign in first.")
