@@ -34,7 +34,7 @@ body>.container-fluid {
   text-align: justify;
 }
 
-.row>.col, .row>.col-7 {
+#intro_row>.col-7 {
   overflow-y: scroll;
 }
 

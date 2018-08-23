@@ -84,5 +84,13 @@
         // No user is signed in.
       }
     });
+    jQuery(document).ready(function($) {
+      if($(".row").outerHeight() < $(".row>.col-7").outerHeight()) {
+        $(".row>.col-7").css({
+          'align-self': 'flex-start',
+          'margin-top': '1rem'
+        });
+      }
+    });
   </script>
 </body>
