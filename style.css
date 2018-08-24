@@ -37,11 +37,11 @@ body>.container-fluid {
   overflow-y: scroll;
 }
 
-#intro_row>.col-7>p {
+#intro_row>.col-10>p {
   text-align: justify;
 }
 
-#intro_row>.col-7 {
+#intro_row>.col-10 {
   overflow-y: scroll;
 }
 
