@@ -64,4 +64,6 @@ p {
   border-radius: 0;
   background: transparent !important;
   border-bottom-color: #ced4da !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
 }
