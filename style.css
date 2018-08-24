@@ -1,3 +1,10 @@
+* {
+  outline: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+}
+
 .display-1 {
   text-align: center;
 }
@@ -48,4 +55,13 @@ body {
 
 p {
   color: var(--secondary);
+}
+
+.input-group>input, .input-group>input:hover {
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-radius: 0;
+  background: transparent !important;
+  border-bottom-color: #ced4da !important;
 }
