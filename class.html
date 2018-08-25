@@ -1,324 +1,274 @@
 <!DOCTYPE html>
 <html lang="ko" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="elf logo_transparent.png">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-    <script>
-      // Initialize Firebase
-      var config = {
-        apiKey: "AIzaSyB1yfyT_PozgicExEjiN9yuvtNBIyZwc64",
-        authDomain: "elf-171bb.firebaseapp.com",
-        databaseURL: "https://elf-171bb.firebaseio.com",
-        projectId: "elf-171bb",
-        storageBucket: "",
-        messagingSenderId: "550791088476"
-      };
-      firebase.initializeApp(config);
-      var db=firebase.firestore();
-      const settings = {timestampsInSnapshots: true};
-      db.settings(settings);
-    </script>
-    <title>Elf</title>
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand" href="#">Elf</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" href="elf logo_transparent.png">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
+  <script src="core.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyB1yfyT_PozgicExEjiN9yuvtNBIyZwc64",
+      authDomain: "elf-171bb.firebaseapp.com",
+      databaseURL: "https://elf-171bb.firebaseio.com",
+      projectId: "elf-171bb",
+      storageBucket: "",
+      messagingSenderId: "550791088476"
+    };
+    firebase.initializeApp(config);
+    var db = firebase.firestore();
+    const settings = {
+      timestampsInSnapshots: true
+    };
+    db.settings(settings);
+  </script>
+  <title>Elf</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="index.html">Elf</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="index.html">Home</a>
-          </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Class</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="intro.html">What is Elf?</a>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-          <button class="btn btn-outline-warning btn-block my-2 my-sm-0" type="button" id="SignInandSetting">Sign In</button>
-        </form>
-      </div>
-    </nav>
-    <div class="container-fluid">
-      <div class="row align-items-center" id="default_row">
-        <div class="col"></div>
-        <div class="col-7">
-          <h1 class="display-4">Class Management</h1>
-          <p class="lead">Join, Create and Share!!</p>
-          <button type="button" class="btn btn-dark btn-block mb-3"  id="CreateClass">Create Class</button>
-          <button type="button" class="btn btn-dark btn-block mb-3" id="JoinClass">Join Class</button>
-          <button type="button" class="btn btn-dark btn-block" id="EnterClass">Enter Class</button>
-        </div>
-        <div class="col"></div>
-      </div>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Class</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="intro.html">What is Elf?</a>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <button class="btn btn-outline-warning btn-block my-2 my-sm-0" type="button" id="SignInandSetting">Sign In</button>
+      </form>
     </div>
-    <div class="modal fade" id="CCModal" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Create Class</h5>
+  </nav>
+  <div class="container-fluid">
+    <div class="row align-items-center" id="default_row">
+      <div class="col"></div>
+      <div class="col-10">
+        <h1 class="display-4">Class Management</h1>
+        <p class="lead">Join, Create and Share!!</p>
+        <button type="button" class="btn btn-dark btn-block mb-3" id="CreateClass">Create Class</button>
+        <button type="button" class="btn btn-dark btn-block" id="JoinClass">Join Class</button>
+      </div>
+      <div class="col"></div>
+    </div>
+  </div>
+  <div class="modal fade" id="CCModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Create Class</h5>
+        </div>
+        <div class="modal-body">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Class Name" id="Name_CC">
           </div>
-          <div class="modal-body">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Class Name" id="Name_CC">
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-dark" id="RealCC">Create Class</button>
-          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-dark" id="RealCC">Create Class</button>
         </div>
       </div>
     </div>
-    <div class="modal fade" id="JCModal" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Join Class</h5>
+  </div>
+  <div class="modal fade" id="JCModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Join Class</h5>
+        </div>
+        <div class="modal-body">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Class ID" id="ID_JC">
           </div>
-          <div class="modal-body">
-            <div class="input-group mb-3">
-              <input type="text" class="form-control" placeholder="Class ID" id="ID_JC">
-            </div>
-            <div class="input-group">
-              <input type="password" class="form-control" placeholder="Teacher Token" id="Token_JC">
-            </div>
+          <div class="input-group">
+            <input type="password" class="form-control" placeholder="Teacher Token" id="Token_JC">
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-dark" id="RealJC">Join Class</button>
-          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-dark" id="RealJC">Join Class</button>
         </div>
       </div>
     </div>
-    <div class="modal fade" id="ETModal" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Enter Class</h5>
-          </div>
-          <div class="modal-body">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Name</th>
-                  <th scope="col"></th>
-                </tr>
-              </thead>
-              <tbody id="#ETtbody">
-              </tbody>
-            </table>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </body>
-  <script type="text/javascript">
-    $('#CCModal>input').keyup(function(e) {
-      if (e.keyCode === 13) $("#RealCC").click();
-    });
-    $('#JCModal>input').keyup(function(e) {
-      if (e.keyCode === 13) $("#RealJC").click();
-    });
-    var gentoken = function() {
-      return Math.random().toString(36).substr(2); // remove `0.`
-    };
-    $("#SignInandSetting").click(function() {
-      if(firebase.auth().currentUser != null) {
-        window.location.replace('usersetting.html')
+  </div>
+</body>
+<script type="text/javascript">
+  $('#CCModal>input').keyup(function(e) {
+    if (e.keyCode === 13) $("#RealCC").click();
+  });
+  $('#JCModal>input').keyup(function(e) {
+    if (e.keyCode === 13) $("#RealJC").click();
+  });
+  var gentoken = function() {
+    return Math.random().toString(36).substr(2); // remove `0.`
+  };
+  $("#SignInandSetting").click(function() {
+    if (firebase.auth().currentUser != null) {
+      window.location.replace('usersetting.html')
+    } else {
+      window.location.replace('signin.html')
+    }
+  });
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      $("#SignInandSetting").html(user.displayName);
+      if (user.photoURL === "Student") {
+        $("#CreateClass").attr('disabled', '');
       }
-      else {
-        window.location.replace('signin.html')
+      if(!user.emailVerified) {
+        alert("Please verify your email first.")
+        window.location.replace("usersetting.html");
       }
-    });
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        $("#SignInandSetting").html(user.displayName);
-        if(user.photoURL==="Student") {
-          $("#CreateClass").attr('disabled','');
-        }
-        if(!user.emailVerified) {
-          alert("Please verify your email first.")
-          window.location.replace("usersetting.html");
-        }
-      } else {
-        alert("Please sign in first.")
-        window.location.replace("signin.html");
+    } else {
+      alert("Please sign in first.")
+      window.location.replace("signin.html");
+    }
+  });
+  $("#CreateClass").click(function() {
+    if (firebase.auth().currentUser.photoURL === "Student") {
+      alert("Student cannot create classes.");
+      return;
+    }
+    $("#CCModal").modal();
+  });
+  $("#RealCC").click(function() {
+    var user = firebase.auth().currentUser;
+    var classname = $("#Name_CC").val();
+    var ds = (new Date()).toISOString().replace(/[^0-9]/g, "") + "_" + gentoken();
+    db.collection("Classes").doc(ds).set({
+      name: classname,
+      teacher_token: gentoken(),
+      members: {
+        TeacherName: [user.displayName],
+        TeacherUid: [user.uid],
+        StudentName: [],
+        StudentUid: []
       }
-    });
-    $("#CreateClass").click(function(){
-      if(firebase.auth().currentUser.photoURL==="Student") {
-        alert("Student cannot create classes.");
-        return;
-      }
-      $("#CCModal").modal();
-    });
-    $("#EnterClass").click(function(){
-      var Ref=db.collection("Users").doc(user.uid);
+    }).then(function() {
+      var Ref = db.collection("Users").doc(user.uid);
+      var classList = [];
       Ref.get().then(function(doc) {
-        if(doc.exists) {
-          var classList=doc.data()["Classes"];
-          var htmlString="";
-          for(var i=0;i<classList.length;i++) {
-            var classname;
-            db.collection("Classes").doc(classList[i]).get().then(function(doc){
-              classname=doc.data()["name"];
-              htmlString+="<tr><th scope='row'>"+i.toString()+
-              "</th><td>"+classname+
-              "</td><td><button type='button' class='btn btn-dark btn-block'"+
-              "onclick=\"Cookies.set('EnteringClass','"+classList[i]+"')\">Go!</button></td>"
-              return;
-            }).catch(function(error) {
-              var errorMessage=error.message;
-              alert(errorMessage);
-            });
+        if (doc.exists) {
+          if (doc.hasOwnProperty("Classes")) {
+            classList = doc["Classes"];
           }
-          $("#ETtbody").html(htmlString);
-        } else {
-          alert("You haven't join any classes yet!")
         }
+        classList.push(ds);
+        Ref.set({
+          username: user.displayName,
+          Classes: classList
+        }, {
+          merge: true
+        }).then(function() {
+          alert('Class creation complete.')
+        }).catch(function(error) {
+          var errorMessage = error.message;
+          alert(errorMessage);
+        });
       }).catch(function(error) {
-        var errorMessage=error.message;
+        var errorMessage = error.message;
         alert(errorMessage);
       });
-      $("#ETModal").modal();
+    }).catch(function(error) {
+      var errorMessage = error.message;
+      alert(errorMessage);
     });
-    $("#RealCC").click(function(){
-      var user=firebase.auth().currentUser;
-      var classname=$("#Name_CC").val();
-      var ds = (new Date()).toISOString().replace(/[^0-9]/g, "")+"_"+gentoken();
-      db.collection("Classes").doc(ds).set({
-          name: classname,
-          teacher_token: gentoken(),
-          members: {
-            TeacherName:[user.displayName],
-            TeacherUid:[user.uid],
-            StudentName:[],
-            StudentUid:[]
-          },
-          parent: "",
-          childs: []
-      }).then(function(){
-        var Ref=db.collection("Users").doc(user.uid);
-        var classList=[];
-        Ref.get().then(function(doc){
-          if(doc.exists) {
-            if(doc.hasOwnProperty("Classes")) {
-              classList=doc["Classes"];
-            }
+  });
+  $("#JoinClass").click(function() {
+    var user = firebase.auth().currentUser;
+    if (user.photoURL === "Student") {
+      $("#Token_JC").attr('style', 'display:none;');
+      $("#Real_JC").attr('class', 'input-group');
+    }
+    $("#JCModal").modal();
+  });
+  $("#RealJC").click(function() {
+    var user = firebase.auth().currentUser;
+    var Ttoken = $("#Token_JC").val();
+    var classID = $("#ID_JC").val();
+    var Ref = db.collection("Classes").doc(classID);
+    var docdata;
+    Ref.get().then(function(doc) {
+      if (doc.exists) {
+        docdata = doc.data();
+        if (user.photoURL === "Student") {
+          if (docdata["members"]["StudentUid"].includes(user.uid)) {
+            alert("You already joined this class!")
+            return;
           }
-          classList.push(ds);
-          Ref.set({
-            username:user.displayName,
-            Classes:classList
-          }, {merge:true}).then(function(){
-            alert('Class creation complete.')
+          docdata["members"]["StudentName"].push(user.displayName);
+          docdata["members"]["StudentUid"].push(user.uid);
+        } else {
+          if (Ttoken != docdata["teacher_token"]) {
+            alert("Enter the token properly.");
+            return;
+          }
+          if (docdata["members"]["TeacherUid"].includes(user.uid)) {
+            alert("You already joined this class!");
+            return;
+          }
+          docdata["members"]["TeacherName"].push(user.displayName);
+          docdata["members"]["TeacherUid"].push(user.uid);
+        }
+        Ref.update({
+          members: {
+            TeacherName: docdata["members"]["TeacherName"],
+            TeacherUid: docdata["members"]["TeacherUid"],
+            StudentName: docdata["members"]["StudentName"],
+            StudentUid: docdata["members"]["StudentUid"]
+          }
+        }).then(function() {
+          var Ref = db.collection("Users").doc(user.uid);
+          var classList = [];
+          Ref.get().then(function(doc) {
+            if (doc.exists) {
+              if (doc.hasOwnProperty("Classes")) {
+                classList = doc["Classes"];
+              }
+            }
+            classList.push(classID);
+            Ref.set({
+              name: user.displayName,
+              Classes: classList
+            }, {
+              merge: true
+            }).then(function() {
+              alert('Class joining complete.')
+            }).catch(function(error) {
+              var errorMessage = error.message;
+              alert(errorMessage);
+            });
           }).catch(function(error) {
-            var errorMessage=error.message;
+            var errorMessage = error.message;
             alert(errorMessage);
           });
         }).catch(function(error) {
-          var errorMessage=error.message;
+          var errorMessage = error.message;
           alert(errorMessage);
         });
-      }).catch(function(error){
-        var errorMessage=error.message;
-        alert(errorMessage);
-      });
-    });
-    $("#JoinClass").click(function(){
-      var user=firebase.auth().currentUser;
-      if(user.photoURL==="Student") {
-        $("#Token_JC").attr('style', 'display:none;');
-        $("#Real_JC").attr('class', 'input-group');
+      } else {
+        alert("No class. Please check again.");
       }
-      $("#JCModal").modal();
+    }).catch(function(error) {
+      var errorMessage = error.message;
+      alert(errorMessage);
     });
-    $("#RealJC").click(function(){
-      var user=firebase.auth().currentUser;
-      var Ttoken=$("#Token_JC").val();
-      var classID=$("#ID_JC").val();
-      var Ref=db.collection("Classes").doc(classID);
-      var docdata;
-      Ref.get().then(function(doc) {
-        if (doc.exists) {
-          docdata=doc.data();
-          if(user.photoURL==="Student") {
-            if(docdata["members"]["StudentUid"].includes(user.uid)) {
-              alert("You already joined this class!")
-              return;
-            }
-            docdata["members"]["StudentName"].push(user.displayName);
-            docdata["members"]["StudentUid"].push(user.uid);
-          } else {
-            if(Ttoken!=docdata["teacher_token"]) {
-              alert("Enter the token properly.");
-              return;
-            }
-            if(docdata["members"]["TeacherUid"].includes(user.uid)) {
-              alert("You already joined this class!");
-              return;
-            }
-            docdata["members"]["TeacherName"].push(user.displayName);
-            docdata["members"]["TeacherUid"].push(user.uid);
-          }
-          Ref.update({
-            members: {
-              TeacherName:docdata["members"]["TeacherName"],
-              TeacherUid:docdata["members"]["TeacherUid"],
-              StudentName:docdata["members"]["StudentName"],
-              StudentUid:docdata["members"]["StudentUid"]
-            }
-          }).then(function(){
-            var Ref=db.collection("Users").doc(user.uid);
-            var classList=[];
-            Ref.get().then(function(doc){
-              if(doc.exists) {
-                if(doc.hasOwnProperty("Classes")) {
-                  classList=doc["Classes"];
-                }
-              }
-              classList.push(classID);
-              Ref.set({
-                name:user.displayName,
-                Classes:classList
-              }, {merge:true}).then(function(){
-                alert('Class joining complete.')
-              }).catch(function(error) {
-                var errorMessage=error.message;
-                alert(errorMessage);
-              });
-            }).catch(function(error) {
-              var errorMessage=error.message;
-              alert(errorMessage);
-            });
-          }).catch(function(error){
-            var errorMessage=error.message;
-            alert(errorMessage);
-          });
-        }
-        else {
-          alert("No class. Please check again.");
-        }
-      }).catch(function(error) {
-        var errorMessage=error.message;
-        alert(errorMessage);
-      });
-    });
-  </script>
+  });
+</script>
+
 </html>
