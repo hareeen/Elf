@@ -260,6 +260,7 @@
           merge: true
         }).then(function() {
           alert('Class creation complete.')
+          enterclass(ds);
         }).catch(function(error) {
           var errorMessage = error.message;
           alert(errorMessage);
@@ -333,6 +334,7 @@
               merge: true
             }).then(function() {
               alert('Class joining complete.')
+              enterclass(classID);
             }).catch(function(error) {
               var errorMessage = error.message;
               alert(errorMessage);
