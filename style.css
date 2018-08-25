@@ -18,7 +18,7 @@ body>.container-fluid {
   padding: 0;
 }
 
-#index_row>.col>p {
+#index_row>.col>p, #index_row>.col-10>p {
   margin: auto;
   text-align: center;
   width: 100%;
