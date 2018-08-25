@@ -9,7 +9,7 @@
   text-align: center;
 }
 
-#default_row, #index_row, html, body, body>.container-fluid, #intro_row {
+#default_row, #index_row, html, body, body>.container-fluid, #intro_row, #info_row {
   margin: auto;
   height: 100%;
 }
@@ -66,4 +66,13 @@ p {
   border-bottom-color: #ced4da !important;
   padding-left: 0px !important;
   padding-right: 0px !important;
+}
+
+#info_row>.col-10 {
+  margin-top:1rem;
+}
+
+table {
+  margin-bottom: 0px !important;
+  text-align: center;
 }
