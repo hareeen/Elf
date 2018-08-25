@@ -50,7 +50,7 @@
         <li class="nav-item">
           <a class="nav-link" href="intro.html">What is Elf?</a>
         </li>
-        <li class="nav-item active">
+        <li class="nav-item">
           <a class="nav-link" href="crashreport.html">Crash report</a>
         </li>
       </ul>
@@ -63,8 +63,10 @@
     <div class="row" id="info_row">
       <div class="col"></div>
       <div class="col-10">
-        <h1 class="display-4"></h1>
-        <p class="lead">The first step to become an elf.</p>
+        <h1 class="display-4">[Class Name]</h1>
+        <p class="lead">[Class ID]</p>
+        <p class="lead">[Parent Class]</p>
+        <p class="lead">[Child Class]</p>
       </div>
       <div class="col"></div>
     </div>
@@ -94,8 +96,7 @@
           alert(errorMessage);
         });
       } else {
-        alert("Please enter class first.")
-        window.location.replace("class.html")
+        alert("관계자외 출입금지")
       }
     } else {
       alert("Please sign in first.")
