@@ -54,29 +54,29 @@
     <div class="row align-items-center" id="index_row">
       <div class="col"></div>
       <div class="col-10">
+        <h1 class="display-1">Did you find any bug?</h1>
+        <p class="lead mb-3">Please report us.<br><br></p>
         <form>
           <div class="form_group">
             <label for="InputEmail">Email address</label>
-            <input type="email" class="form-control" id="InputEmail" aria-describedby="emailHelp">
-            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            <input type="email" class="form-control" id="InputEmail" aria-describedby="emailHelp" placeholder="someone@email.com">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.<br><br></small>
+          </div>
+          <div class="form_group">
             <label for="InputName">Bug Name</label>
-            <input type="text" class="form-control" id="InputName">
-            <label for="InputText"> </label>
-            <textarea type="text" class="form-control" id="InputText"></textarea>
+            <input type="text" class="form-control" id="InputName" placeholder="name">
+          </div>
+          <label for="InputText"> </label>
+          <div class="form_group">
+            <textarea type="text" class="form-control" id="InputText" cols="50" rows="5" placeholder="Please describe it."></textarea>
           </div>
         </form>
-        <h1 class="display-1">Did you find any bug?</h1>
-        <p class="lead mb-3">Please report us.</p>
       </div>
       <div class="col"></div>
     </div>
   </div>
 </body>
 <script type="text/javascript">
-
-  $("#intro_button").click(function() {
-    window.location.replace('intro.html');
-  });
 </script>
 
 </html>
