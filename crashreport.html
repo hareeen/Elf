@@ -95,13 +95,8 @@
     }
   });
   $("#submit_button").click(function() {
-    var win = window.open('mailto:jihamjangelf@gmail.com?subject=[Elf] BUGFIX: '+$("#InputName").val()
+    window.open('mailto:jihamjangelf@gmail.com?subject=[Elf] BUGFIX: '+$("#InputName").val()
     +'&body='+$("#InputText").val());
-    if (win) {
-      win.focus();
-    } else {
-      alert('Please allow popups for this website');
-    }
   });
 </script>
 
