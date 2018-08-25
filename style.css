@@ -57,7 +57,9 @@ p {
   color: var(--secondary);
 }
 
-.input-group>input, .input-group>input:hover {
+.input-group>input, .input-group>input:hover,
+.form_group>input, .form_group>input:hover,
+.form_group>textarea, .form_group>textarea:hover, {
   border-top: none !important;
   border-left: none !important;
   border-right: none !important;
