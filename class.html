@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
   <link rel="stylesheet" href="style.css">
   <link rel="shortcut icon" href="elf logo_transparent.png">
-
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
@@ -64,7 +64,8 @@
         <h1 class="display-4">Class Management</h1>
         <p class="lead">Join, Create and Share!!</p>
         <button type="button" class="btn btn-dark btn-block mb-3" id="CreateClass">Create Class</button>
-        <button type="button" class="btn btn-dark btn-block" id="JoinClass">Join Class</button>
+        <button type="button" class="btn btn-dark btn-block mb-3" id="JoinClass">Join Class</button>
+        <button type="button" class="btn btn-dark btn-block" id="EnterClass">Enter Class</button>
       </div>
       <div class="col"></div>
     </div>
@@ -108,6 +109,40 @@
       </div>
     </div>
   </div>
+  <div class="modal fade" id="ECModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Enter Class</h5>
+        </div>
+        <div class="modal-body">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Go!</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!--
+              <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+              </tr>
+              -->
+
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 <script type="text/javascript">
   $('#CCModal>input').keyup(function(e) {
@@ -119,6 +154,10 @@
   var gentoken = function() {
     return Math.random().toString(36).substr(2); // remove `0.`
   };
+  var enterclass=function(k){
+    Cookies.set('_classid', k);
+    window.location.replace('class_info.html');
+  }
   $("#SignInandSetting").click(function() {
     if (firebase.auth().currentUser != null) {
       window.location.replace('usersetting.html')
@@ -128,19 +167,61 @@
   });
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-      $("#SignInandSetting").html(user.displayName);
-      if (user.photoURL === "Student") {
-        $("#CreateClass").attr('disabled', '');
-      }
       if(!user.emailVerified) {
         alert("Please verify your email first.")
         window.location.replace("usersetting.html");
       }
+      $("#SignInandSetting").html(user.displayName);
+      if (user.photoURL === "Student") {
+        $("#CreateClass").attr('disabled', '');
+      }
+      getClassList(function(k) {
+        getTable(k, function(tbl) {
+          $("#ECModal>.modal-dialog>.modal-content>.modal-body>table>tbody").html(tbl);
+        });
+      });
     } else {
       alert("Please sign in first.")
       window.location.replace("signin.html");
     }
   });
+  var getClassList = function(callback) {
+    var classesRef = db.collection('Users').doc(firebase.auth().currentUser.uid);
+    classesRef.get().then(function(doc) {
+      if (doc.exists) {
+        if (doc.data().hasOwnProperty("Classes")) {
+          callback(doc.data()["Classes"]);
+        } else {
+          callback([]);
+        }
+      } else {
+        console.log("No such document!");
+      }
+    }).catch(function(error) {
+      var errorMessage = error.message;
+      alert(errorMessage);
+    });
+  }
+  var getTable = function(IDList, callback) {
+    var TBLE = "";
+    var cnt=0;
+    for(var i=0;i<IDList.length;i++) {
+      db.collection('Classes').doc(IDList[i]).get().then(function(doc) {
+        if(doc.exists) {
+          TBLE=TBLE+"<tr><th scope=\"row\">"+(cnt+1).toString()+"</th><td>"
+              +doc.data()['name']+"</td><td><button type=\"button\" class=\"btn btn-dark btn-sm btn-block\" onclick=\"enterclass(\'"
+              +IDList[cnt]+"\')\">Go!"
+              +"</button></td></tr>";
+          console.log(TBLE);
+          cnt++;
+          if(cnt===IDList.length) callback(TBLE);
+        }
+      }).catch(function(error) {
+        var errorMessage = error.message;
+        alert(errorMessage);
+      });
+    }
+  }
   $("#CreateClass").click(function() {
     if (firebase.auth().currentUser.photoURL === "Student") {
       alert("Student cannot create classes.");
@@ -163,13 +244,14 @@
       }
     }).then(function() {
       var Ref = db.collection("Users").doc(user.uid);
-      var classList = [];
       Ref.get().then(function(doc) {
+        var classList = [];
         if (doc.exists) {
-          if (doc.hasOwnProperty("Classes")) {
-            classList = doc["Classes"];
+          if (doc.data().hasOwnProperty("Classes")) {
+            classList = doc.data()["Classes"];
           }
         }
+        console.log(classList);
         classList.push(ds);
         Ref.set({
           username: user.displayName,
@@ -239,8 +321,8 @@
           var classList = [];
           Ref.get().then(function(doc) {
             if (doc.exists) {
-              if (doc.hasOwnProperty("Classes")) {
-                classList = doc["Classes"];
+              if (doc.data().hasOwnProperty("Classes")) {
+                classList = doc.data()["Classes"];
               }
             }
             classList.push(classID);
@@ -270,6 +352,9 @@
       var errorMessage = error.message;
       alert(errorMessage);
     });
+  });
+  $("#EnterClass").click(function(){
+    $("#ECModal").modal();
   });
 </script>
 
