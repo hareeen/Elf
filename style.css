@@ -76,3 +76,7 @@ table {
   margin-bottom: 0px !important;
   text-align: center;
 }
+
+h4 {
+  font-weight: 400 !important;
+}
