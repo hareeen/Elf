@@ -35,8 +35,8 @@
       </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home</a>
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="class.html">Class</a>
@@ -68,15 +68,18 @@
           </div>
           <label for="InputText"> </label>
           <div class="form_group">
-            <textarea type="text" class="form-control" id="InputText" cols="50" rows="5" placeholder="Please describe it."></textarea>
+            <textarea type="text" class="form-control" id="InputText" cols="50" rows="5" aria-describedby="Bugdescribe" placeholder="Please describe it."></textarea>
+            <small id="Bugdescribe" class="form-text text-muted"> <br><br></small>
           </div>
         </form>
+        <button type="button" class="btn btn-primary btn-block">Submit</button>
       </div>
       <div class="col"></div>
     </div>
   </div>
 </body>
 <script type="text/javascript">
+
 </script>
 
 </html>
