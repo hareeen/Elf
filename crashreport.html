@@ -58,24 +58,22 @@
       <div class="col"></div>
       <div class="col-10">
         <h1 class="display-4">Did you find any bug?</h1>
-        <p class="lead mb-3">Please report us.<br><br></p>
+        <p class="lead">Please report us.</p>
+        <div class="alert alert-warning alert-dismissible fade show mb-3" role="alert">
+          If you can't submit(Nothing happened), <strong>change your default mail app.</strong>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
         <form>
-          <div class="form_group">
-            <label for="InputEmail">Email address</label>
-            <input type="email" class="form-control" id="InputEmail" aria-describedby="emailHelp" placeholder="someone@email.com(enter your email)">
-            <small id="emailHelp" class="form-text text-muted">Elf team won't share your information with anyone else.<br><br></small>
+          <div class="form_group mb-3">
+            <input type="text" class="form-control" id="InputName" placeholder="Bug name">
           </div>
-          <div class="form_group">
-            <label for="InputName">Bug Name</label>
-            <input type="text" class="form-control" id="InputName" placeholder="name">
-          </div>
-          <label for="InputText"> </label>
-          <div class="form_group">
+          <div class="form_group mb-3">
             <textarea type="text" class="form-control" id="InputText" cols="50" rows="5" aria-describedby="Bugdescribe" placeholder="Please describe it."></textarea>
-            <small id="Bugdescribe" class="form-text text-muted"> <br><br></small>
           </div>
         </form>
-        <button type="button" class="btn btn-primary btn-block">Submit</button>
+        <button type="button" class="btn btn-primary btn-block" id="submit_button">Submit</button>
       </div>
       <div class="col"></div>
     </div>
@@ -96,8 +94,11 @@
       // No user is signed in.
     }
   });
-
-
+  $("#submit_button").click(function() {
+    window.open('mailto:jihamjangelf@gmail.com?subject=[Elf] BUGFIX: '+$("#InputName").val()
+    +'&body='+$("#InputText").val());
+    window.close();
+  });
 </script>
 
 </html>
