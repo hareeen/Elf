@@ -82,6 +82,21 @@
   </div>
 </body>
 <script type="text/javascript">
+  $("#SignInandSetting").click(function() {
+    if (firebase.auth().currentUser != null) {
+      window.location.replace('usersetting.html');
+    } else {
+      window.location.replace('signin.html');
+    }
+  });
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      $("#SignInandSetting").html(user.displayName);
+    } else {
+      // No user is signed in.
+    }
+  });
+  
 
 </script>
 
