@@ -272,7 +272,6 @@
       }
       if(Cookies.get('_classid')) {
         if(user.photoURL=="Student") {
-          $("#settings_ttoken").html("<i>Forbidden to students</i>");
           $("#createSubgroup").css({'display':'none'});
         }
         $("#SignInandSetting").html(user.displayName);
@@ -280,7 +279,11 @@
         $("#settings_classid").html(classid);
         db.collection('Classes').doc(classid).get().then(function(doc) {
           $(".display-4").html(doc.data()["name"]);
-          $("#settings_ttoken").html(doc.data()["teacher_token"]);
+          if(user.photoURL=="Student") {
+          $("#settings_ttoken").html("<i>Forbidden to students</i>");
+          } else {
+            $("#settings_ttoken").html(doc.data()["teacher_token"]);
+          }
           var TBLE1="", TBLE2="";
           for(var i=0;i<doc.data()["members"]["TeacherName"].length;i++) {
             TBLE1=TBLE1+"<tr><th scope=\"row\">"+(i+1).toString()+"</th><td>"+doc.data()["members"]["TeacherName"][i]
