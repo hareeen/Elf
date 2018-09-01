@@ -272,8 +272,8 @@
       }
       if(Cookies.get('_classid')) {
         if(user.photoURL=="Student") {
-          $("#settings_ttoken").css({'display':'none'});
-          $("createSubgroup").attr('disabled','');
+          $("#settings_ttoken").html("<i>Forbidden to students</i>");
+          $("#createSubgroup").css({'display':'none'});
         }
         $("#SignInandSetting").html(user.displayName);
         var classid=Cookies.get('_classid');
