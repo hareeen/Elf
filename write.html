@@ -45,7 +45,7 @@
           <a class="nav-link" href="intro.html">What is Elf?</a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="#">Crash report</a>
+          <a class="nav-link" href="crashreport.html">Crash report</a>
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
@@ -58,7 +58,7 @@
       <div class="col"></div>
       <div class="col-10">
         <h1 class="display-4">Do you have anything to share?</h1>
-        <p class="lead">Write it here</p>
+        <p class="lead">Write it here!</p>
         <form>
           <div class="form_group mb-3">
             <input type="text" class="form-control" id="InputName" placeholder="Title">
@@ -89,12 +89,7 @@
     }
   });
   $("#submit_button").click(function() {
-    var win = window.open('mailto:jihamjangelf@gmail.com?subject=[Elf] BUGFIX: '+$("#InputName").val()
-    +'&body='+$("#InputText").val());
-    if (win) {
-      win.focus();
-    } else {
-      alert('Please allow popups for this website');
+    
     }
   });
 </script>
