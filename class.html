@@ -173,7 +173,7 @@
       }
       $("#SignInandSetting").html(user.displayName);
       if (user.photoURL === "Student") {
-        $("#CreateClass").attr('disabled', '');
+        $("#CreateClass").css({'display':'none'});
       }
       getClassList(function(k) {
         getTable(k, function(tbl) {
