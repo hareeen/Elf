@@ -55,13 +55,58 @@
   <div class="container-fluid">
     <div class="row align-items-center" id="index_row">
       <div class="col"></div>
-      <div class="col">
-        <h1 class="display-1">Sorry!</h1>
-        <p class="lead mb-3">Main Board is empty. Be the first user to write.</p>
-        <button type="button" class="btn btn-primary" id="intro_button">Write new</button>
-        <!-- CHANGE: REMOVE UNNECESSARY TEXTS
-        <p class="lead">Never open <strong>Elf</strong> in secret mode.</p>
-        <p class="lead">If you want to join a class, you <strong>should</strong> copy&paste the class code.</p> -->
+      <div class="col-10">
+        <ul class="list-inline">
+<<<<<<< HEAD
+          <li class="list-inline-item" style="font-size:200%;">[Mainboard]</li>
+          <button type="button" class="btn btn-primary" id="intro_button" style="float: right">Write new</button>
+=======
+          <li class="list-inline-item"style="font-size:200%;">Mainboard</li>
+          <button type="button" class="btn btn-primary" id="intro_button">Write new</button>
+>>>>>>> 6ce46c2a672672b991ca4ec4d3680b0b05e97512
+        </ul>
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Title</th>
+              <th scope="col">by</th>
+              <th scope="col">When</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+                <td>청소 안하고 도망간 박성빈을 찾습니다</td>
+              <td>Elf Team</td>
+              <td>2018-09-01</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>""</td>
+              <td>""</td>
+              <td>""</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>""</td>
+              <td>""</td>
+              <td>""</td>
+            </tr>
+            <tr>
+              <th scope="row">4</th>
+              <td>""</td>
+              <td>""</td>
+              <td>""</td>
+            </tr>
+            <tr>
+              <th scope="row">5</th>
+              <td>""</td>
+              <td>""</td>
+              <td>""</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
       <div class="col"></div>
     </div>
@@ -83,7 +128,7 @@
     }
   });
   $("#intro_button").click(function() {
-    alert("An error has occured.")
+    window.location.replace('write.html');
   });
 </script>
 

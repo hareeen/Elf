@@ -43,49 +43,53 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="intro.html">What is Elf?</a>
-        <li class="nav-item">
+        </li>
+        <li class="nav-item active">
           <a class="nav-link" href="crashreport.html">Crash report</a>
+        </li>
       </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <button class="btn btn-outline-warning btn-block my-2 my-sm-0" type="button" id="SignInandSetting">Sign In</button>
+      </form>
     </div>
   </nav>
   <div class="container-fluid">
     <div class="row align-items-center" id="default_row">
       <div class="col"></div>
       <div class="col-10">
-        <h1 class="display-4">Sign In</h1>
-        <p class="lead"><strong>Please</strong> enter <i>Email</i> and <i>Password</i> to <b>sign in</b>.</p>
-        <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="Email" id="email_IN">
-        </div>
-        <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password" id="password_IN">
-        </div>
-        <button class="btn btn-primary btn-block mb-3" type="button" id="SignIn">Sign In</button>
-        <p class="lead" style="text-align:center;">Don't have an account? <a href="signup.html">Sign Up</a></p>
+        <h1 class="display-4">Do you have anything to share?</h1>
+        <p class="lead">Write it here!</p>
+        <form>
+          <div class="form_group mb-3">
+            <input type="text" class="form-control" id="InputName" placeholder="Title">
+          </div>
+          <div class="form_group mb-3">
+            <textarea type="text" class="form-control" id="InputText" cols="50" rows="5" aria-describedby="contents" placeholder="Please describe it."></textarea>
+          </div>
+        </form>
+        <button type="button" class="btn btn-primary btn-block" id="submit_button">Submit</button>
       </div>
       <div class="col"></div>
     </div>
   </div>
 </body>
 <script type="text/javascript">
-  $('input').keyup(function(e) {
-    if (e.keyCode === 13) $("#SignIn").click();
+  $("#SignInandSetting").click(function() {
+    if (firebase.auth().currentUser != null) {
+      window.location.replace('usersetting.html');
+    } else {
+      window.location.replace('signin.html');
+    }
   });
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-      alert("Sign in complete.")
-      window.location.replace("index.html")
+      $("#SignInandSetting").html(user.displayName);
+    } else {
+      // No user is signed in.
     }
   });
-  $("#SignIn").click(function() {
-    var email = $("#email_IN").val();
-    var password = $("#password_IN").val();
-    firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      alert(errorMessage);
-    });
+  $("#submit_button").click(function() {
+    
+    }
   });
 </script>
-
-</html>

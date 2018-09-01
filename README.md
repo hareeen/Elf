@@ -1,2 +1,2 @@
 # Elf
-The Closed SNS for Students and Teachers
+The Closed SNS for Students, Teachers, and overall School
