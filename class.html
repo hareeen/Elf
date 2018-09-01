@@ -204,17 +204,20 @@
   }
   var getTable = function(IDList, callback) {
     var TBLE = "";
-    var cnt=0;
+    var cnt=0, cnt2=0;
     for(var i=0;i<IDList.length;i++) {
       db.collection('Classes').doc(IDList[i]).get().then(function(doc) {
         if(doc.exists) {
-          TBLE=TBLE+"<tr><th scope=\"row\">"+(cnt+1).toString()+"</th><td>"
-              +doc.data()['name']+"</td><td><button type=\"button\" class=\"btn btn-dark btn-sm btn-block\" onclick=\"enterclass(\'"
-              +IDList[cnt]+"\')\">Go!"
-              +"</button></td></tr>";
-          console.log(TBLE);
-          cnt++;
-          if(cnt===IDList.length) callback(TBLE);
+          if(doc.data()["parent"]=="") {
+            TBLE=TBLE+"<tr><th scope=\"row\">"+(cnt+1).toString()+"</th><td>"
+                +doc.data()['name']+"</td><td><button type=\"button\" class=\"btn btn-dark btn-sm btn-block\" onclick=\"enterclass(\'"
+                +IDList[cnt]+"\')\">Go!"
+                +"</button></td></tr>";
+            console.log(TBLE);
+            cnt++;
+          }
+          cnt2++;
+          if(cnt2===IDList.length) callback(TBLE);
         }
       }).catch(function(error) {
         var errorMessage = error.message;
@@ -241,7 +244,9 @@
         TeacherUid: [user.uid],
         StudentName: [],
         StudentUid: []
-      }
+      },
+      childs:[],
+      parent:""
     }).then(function() {
       var Ref = db.collection("Users").doc(user.uid);
       Ref.get().then(function(doc) {
@@ -328,7 +333,7 @@
             }
             classList.push(classID);
             Ref.set({
-              name: user.displayName,
+              username: user.displayName,
               Classes: classList
             }, {
               merge: true

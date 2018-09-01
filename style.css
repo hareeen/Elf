@@ -70,7 +70,7 @@ p {
   padding-right: 0px !important;
 }
 
-#info_row>.col-10 {
+#info_row>.col-9, #info_row>.col-3 {
   margin-top:1rem;
 }
 

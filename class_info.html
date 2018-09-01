@@ -60,19 +60,203 @@
     </div>
   </nav>
   <div class="container-fluid">
+    <h1 class="display-4 ml-4 mt-3 mb-4">[Class Name]</h1>
     <div class="row" id="info_row">
-      <div class="col"></div>
-      <div class="col-10">
-        <h1 class="display-4">[Class Name]</h1>
-        <p class="lead">[Class ID]</p>
-        <p class="lead">[Parent Class]</p>
-        <p class="lead">[Child Class]</p>
+      <div class="col-3">
+        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+          <a class="nav-link active" id="v-pills-board-tab" data-toggle="pill" href="#v-pills-board" role="tab" aria-controls="v-pills-board" aria-selected="true">Board</a>
+          <a class="nav-link" id="v-pills-members-tab" data-toggle="pill" href="#v-pills-members" role="tab" aria-controls="v-pills-members" aria-selected="false">Members</a>
+          <a class="nav-link" id="v-pills-subgroups-tab" data-toggle="pill" href="#v-pills-subgroups" role="tab" aria-controls="v-pills-subgroup" aria-selected="false">Subgroups</a>
+          <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
+        </div>
       </div>
-      <div class="col"></div>
+      <div class="col-9">
+        <div class="tab-content" id="v-pills-tabContent">
+          <div class="tab-pane fade show active" id="v-pills-board" role="tabpanel" aria-labelledby="v-pills-board-tab">
+            <h3>Board</h3>
+            <hr>
+          </div>
+          <div class="tab-pane fade" id="v-pills-members" role="tabpanel" aria-labelledby="v-pills-members-tab">
+            <h3>Members</h3>
+            <hr>
+            <h4>Teachers</h4>
+            <table class="table table-bordered mb-4">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Chat</th>
+                </tr>
+              </thead>
+              <tbody id="members_teacher">
+                <!--
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                  <td>@mdo</td>
+                </tr>
+                -->
+
+              </tbody>
+            </table>
+            <h4>Students</h4>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name</th>
+                </tr>
+              </thead>
+              <tbody id="members_student">
+
+              </tbody>
+            </table>
+          </div>
+          <div class="tab-pane fade" id="v-pills-subgroups" role="tabpanel" aria-labelledby="v-pills-subgroups-tab">
+            <h3>Subgroups</h3>
+            <hr>
+            <div class="alert alert-info alert-dismissible fade show mb-3" role="alert">
+              You can join subgroups in <a href="class.html" class="alert-link">class management</a> page.
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <h4>Subgroup List</h4>
+            <table class="table table-bordered mb-4">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Go!</th>
+                </tr>
+              </thead>
+              <tbody id="subgroup_list">
+                <!--
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                  <td>@mdo</td>
+                </tr>
+                -->
+
+              </tbody>
+            </table>
+            <button class="btn btn-dark btn-block btn-primary mb-5" id="createSubgroup">Create subgroup</button>
+            <button class="btn btn-dark btn-block btn-dark mb-4" id="goParent">Go back to parent class</button>
+          </div>
+          <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+            <h3>Settings</h3>
+            <hr>
+            <dl class="row">
+              <dt class="col-sm-3">Class ID</dt>
+              <dd class="col-sm-9" id="settings_classid"></dd>
+
+              <dt class="col-sm-3">Teacher Token</dt>
+              <dd class="col-sm-9" id="settings_ttoken"></dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="CCModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Create Class</h5>
+        </div>
+        <div class="modal-body">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Class Name" id="Name_CC">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-dark" id="RealCC">Create Class</button>
+        </div>
+      </div>
     </div>
   </div>
 </body>
 <script type="text/javascript">
+  $('#CCModal>input').keyup(function(e) {
+    if (e.keyCode === 13) $("#RealCC").click();
+  });
+  var gentoken = function() {
+    return Math.random().toString(36).substr(2); // remove `0.`
+  };
+  $("#createSubgroup").click(function() {
+    if (firebase.auth().currentUser.photoURL === "Student") {
+      alert("Student cannot create subgroups.");
+      return;
+    }
+    $("#CCModal").modal();
+  });
+  var enterclass=function(k){
+    Cookies.set('_classid', k);
+    window.location.replace('class_info.html');
+  }
+  $("#RealCC").click(function() {
+    var classid=Cookies.get('_classid');
+    var user = firebase.auth().currentUser;
+    var classname = $("#Name_CC").val();
+    var ds = (new Date()).toISOString().replace(/[^0-9]/g, "") + "_" + gentoken();
+    db.collection("Classes").doc(ds).set({
+      name: classname,
+      teacher_token: gentoken(),
+      members: {
+        TeacherName: [user.displayName],
+        TeacherUid: [user.uid],
+        StudentName: [],
+        StudentUid: []
+      },
+      childs:[],
+      parent:classid
+    }).then(function() {
+      var Ref = db.collection("Users").doc(user.uid);
+      Ref.get().then(function(doc) {
+        var classList = [];
+        if (doc.exists) {
+          if (doc.data().hasOwnProperty("Classes")) {
+            classList = doc.data()["Classes"];
+          }
+        }
+        console.log(classList);
+        classList.push(ds);
+        Ref.set({
+          username: user.displayName,
+          Classes: classList
+        }, {
+          merge: true
+        }).then(function() {
+          db.collection("Classes").doc(classid).get().then(function(doc2){
+            var childList=[];
+            if (doc2.exists) {
+              if (doc2.data().hasOwnProperty("childs")) {
+                childList = doc2.data()["childs"];
+              }
+            }
+            childList.push(ds);
+            db.collection("Classes").doc(classid).set({
+              childs:childList
+            }, {merge:true});
+          });
+          alert('Subgroup creation complete. Please refresh this page.')
+        }).catch(function(error) {
+          var errorMessage = error.message;
+          alert(errorMessage);
+        });
+      }).catch(function(error) {
+        var errorMessage = error.message;
+        alert(errorMessage);
+      });
+    }).catch(function(error) {
+      var errorMessage = error.message;
+      alert(errorMessage);
+    });
+  });
   $("#SignInandSetting").click(function() {
     if (firebase.auth().currentUser != null) {
       window.location.replace('usersetting.html')
@@ -89,20 +273,113 @@
       if(Cookies.get('_classid')) {
         $("#SignInandSetting").html(user.displayName);
         var classid=Cookies.get('_classid');
+        $("#settings_classid").html(classid);
         db.collection('Classes').doc(classid).get().then(function(doc) {
-          $(".display-4").html(doc.data()["name"])
+          $(".display-4").html(doc.data()["name"]);
+          $("#settings_ttoken").html(doc.data()["teacher_token"]);
+          var TBLE1="", TBLE2="";
+          for(var i=0;i<doc.data()["members"]["TeacherName"].length;i++) {
+            TBLE1=TBLE1+"<tr><th scope=\"row\">"+(i+1).toString()+"</th><td>"+doc.data()["members"]["TeacherName"][i]
+            +"</td><td><button class=\"btn btn-dark btn-block btn-sm\" onclick=\"enterchat(\'"+doc.data()["members"]["TeacherUid"][i]+"\')\">Chat</td>";
+            if(i===doc.data()["members"]["TeacherName"].length-1) $("#members_teacher").html(TBLE1);
+          }
+          for(var i=0;i<doc.data()["members"]["StudentName"].length;i++) {
+            TBLE2=TBLE2+"<tr><th scope=\"row\">"+(i+1).toString()+"</th><td>"+doc.data()["members"]["StudentName"][i]+"</td>";
+            if(i===doc.data()["members"]["StudentName"].length-1) $("#members_student").html(TBLE2);
+          }
+          getClassList(function(k) {
+            getTable(k, function(tbl) {
+              $("#subgroup_list").html(tbl);
+            });
+          });
+          if(doc.data()["parent"]=="") {
+            $("#goParent").css({'display':'none'});
+          } else {
+            $("#goParent").attr('onclick', 'enterclass(\"'+doc.data()["parent"]+'\")')
+          }
+
+          /*
+          if($.inArray(user.uid, doc.data()["TeacherUid"]) === -1 && $.inArray(user.uid, doc.data()["StudentUid"]) === -1) {
+            alert("You are not in this class!");
+            window.location.replace("class.html");
+          }*/
         }).catch(function(error) {
           var errorMessage = error.message;
           alert(errorMessage);
         });
       } else {
-        alert("관계자외 출입금지")
+        alert("Abnormal approach.")
+        window.location.replace("class.html");
       }
     } else {
       alert("Please sign in first.")
       window.location.replace("signin.html");
     }
   });
+  var getClassList = function(callback) {
+    var classid=Cookies.get('_classid');
+    var classesRef = db.collection('Classes').doc(classid);
+    classesRef.get().then(function(doc) {
+      if (doc.exists) {
+        if (doc.data().hasOwnProperty("childs")) {
+          callback(doc.data()["childs"]);
+        } else {
+          callback([]);
+        }
+      } else {
+        console.log("No such document!");
+      }
+    }).catch(function(error) {
+      var errorMessage = error.message;
+      alert(errorMessage);
+    });
+  }
+  var getTable = function(IDList, callback) {
+    var TBLE = "";
+    var cnt=0;
+    var classid=Cookies.get('_classid');
+    for(var i=0;i<IDList.length;i++) {
+      db.collection('Classes').doc(IDList[i]).get().then(function(doc) {
+        if(doc.exists /*&& doc.data()['parent']==classid*/) {
+          TBLE=TBLE+"<tr><th scope=\"row\">"+(cnt+1).toString()+"</th><td>"
+              +doc.data()['name']+"</td><td><button type=\"button\" class=\"btn btn-dark btn-sm btn-block\" onclick=\"enterclass(\'"
+              +IDList[cnt]+"\')\">Go!"
+              +"</button></td></tr>";
+          console.log(TBLE);
+          cnt++;
+          if(cnt===IDList.length) callback(TBLE);
+        }
+      }).catch(function(error) {
+        var errorMessage = error.message;
+        alert(errorMessage);
+      });
+    }
+  }
+  /*
+  $("#nav_board").click(function() {
+    $("#nav_board").attr('class', 'nav-item nav-link active');
+    $("#nav_members").attr('class', 'nav-item nav-link');
+    $("#nav_subgroups").attr('class', 'nav-item nav-link');
+    $("#nav_settings").attr('class', 'nav-item nav-link');
+  });
+  $("#nav_members").click(function() {
+    $("#nav_board").attr('class', 'nav-item nav-link');
+    $("#nav_members").attr('class', 'nav-item nav-link active');
+    $("#nav_subgroups").attr('class', 'nav-item nav-link');
+    $("#nav_settings").attr('class', 'nav-item nav-link');
+  });
+  $("#nav_subgroups").click(function() {
+    $("#nav_board").attr('class', 'nav-item nav-link');
+    $("#nav_members").attr('class', 'nav-item nav-link');
+    $("#nav_subgroups").attr('class', 'nav-item nav-link active');
+    $("#nav_settings").attr('class', 'nav-item nav-link');
+  });
+  $("#nav_settings").click(function() {
+    $("#nav_board").attr('class', 'nav-item nav-link');
+    $("#nav_members").attr('class', 'nav-item nav-link');
+    $("#nav_subgroups").attr('class', 'nav-item nav-link');
+    $("#nav_settings").attr('class', 'nav-item nav-link active');
+  });*/
 </script>
 
 </html>
