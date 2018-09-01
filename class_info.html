@@ -149,7 +149,7 @@
           <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
             <h3>Settings</h3>
             <hr>
-            <dl class="row">
+            <dl class="row" id="tokens">
               <dt class="col-sm-3">Class ID</dt>
               <dd class="col-sm-9" id="settings_classid"></dd>
 
@@ -271,6 +271,10 @@
         window.location.replace("usersetting.html");
       }
       if(Cookies.get('_classid')) {
+        if(user.photoURL=="Student") {
+          $("#tokens").css({'display':'none'});
+          $("createSubgroup").attr('disabled','');
+        }
         $("#SignInandSetting").html(user.displayName);
         var classid=Cookies.get('_classid');
         $("#settings_classid").html(classid);
@@ -317,12 +321,11 @@
     }
   });
   var getClassList = function(callback) {
-    var classid=Cookies.get('_classid');
-    var classesRef = db.collection('Classes').doc(classid);
+    var classesRef = db.collection('Users').doc(firebase.auth().currentUser.uid);
     classesRef.get().then(function(doc) {
       if (doc.exists) {
-        if (doc.data().hasOwnProperty("childs")) {
-          callback(doc.data()["childs"]);
+        if (doc.data().hasOwnProperty("Classes")) {
+          callback(doc.data()["Classes"]);
         } else {
           callback([]);
         }
@@ -334,20 +337,24 @@
       alert(errorMessage);
     });
   }
+
   var getTable = function(IDList, callback) {
     var TBLE = "";
-    var cnt=0;
     var classid=Cookies.get('_classid');
+    var cnt=0, cnt2=0;
     for(var i=0;i<IDList.length;i++) {
       db.collection('Classes').doc(IDList[i]).get().then(function(doc) {
-        if(doc.exists /*&& doc.data()['parent']==classid*/) {
-          TBLE=TBLE+"<tr><th scope=\"row\">"+(cnt+1).toString()+"</th><td>"
-              +doc.data()['name']+"</td><td><button type=\"button\" class=\"btn btn-dark btn-sm btn-block\" onclick=\"enterclass(\'"
-              +IDList[cnt]+"\')\">Go!"
-              +"</button></td></tr>";
-          console.log(TBLE);
-          cnt++;
-          if(cnt===IDList.length) callback(TBLE);
+        if(doc.exists) {
+          if(doc.data()["parent"]==classid) {
+            TBLE=TBLE+"<tr><th scope=\"row\">"+(cnt+1).toString()+"</th><td>"
+                +doc.data()['name']+"</td><td><button type=\"button\" class=\"btn btn-dark btn-sm btn-block\" onclick=\"enterclass(\'"
+                +IDList[cnt]+"\')\">Go!"
+                +"</button></td></tr>";
+            console.log(TBLE);
+            cnt++;
+          }
+          cnt2++;
+          if(cnt2===IDList.length) callback(TBLE);
         }
       }).catch(function(error) {
         var errorMessage = error.message;
