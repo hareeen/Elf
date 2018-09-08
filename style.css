@@ -53,7 +53,7 @@ body {
   background-color: var(--light);
 }
 
-p {
+p:not(.card-text) {
   color: var(--secondary);
 }
 
