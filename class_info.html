@@ -397,6 +397,23 @@
       } else {
         Ref=db.collection("Chats").doc(user.uid+uid);
       }
+      db.collection("Users").doc(user.uid).get().then(function(mydoc) {
+        if(mydoc.data().hasOwnProperty("alerts")) {
+          var alert_list=mydoc.data()["alerts"];
+          if(alert_list.includes({
+            name: user.displayName,
+            uid: user.uid
+          })) {
+            alert_list.remove({
+              name: user.displayName,
+              uid: user.uid
+            });
+            db.collection("Users").doc(uid).set({
+              alerts:alert_list
+            }, {merge:true})
+          }
+        }
+      });
       db.collection("Users").doc(uid).get().then(function(doc) {
         $("#chat_name").html(doc.data()["username"]);
         Ref.onSnapshot(function(snapshot) {
@@ -443,7 +460,29 @@
           messages:msg_list
         }, {merge:true})
       });
-
+      db.collection("Users").doc(chatwith).get().then(function(doc) {
+        var alert_list=[];
+        if(doc.data().hasOwnProperty("alerts")) {
+          var alert_list=doc.data()["alerts"];
+          if(!alert_list.includes({
+            name: user.displayName,
+            uid: user.uid
+          })) {
+            alert_list.push({
+              name: user.displayName,
+              uid: user.uid
+            });
+          }
+        } else {
+          alert_list.push({
+            name: user.displayName,
+            uid: user.uid
+          });
+        }
+        db.collection("Users").doc(chatwith).set({
+          alerts:alert_list
+        }, {merge:true})
+      });
     }
   });
   var article_view=function(k) {
