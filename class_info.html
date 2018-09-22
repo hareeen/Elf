@@ -384,6 +384,16 @@
     }
   });
   var chatwith;
+  function removeA(arr) {
+    var what, a = arguments, L = a.length, ax;
+    while (L > 1 && arr.length) {
+        what = a[--L];
+        while ((ax= arr.indexOf(what)) !== -1) {
+            arr.splice(ax, 1);
+        }
+    }
+    return arr;
+  }
   var enterchat=function(uid){
     var user=firebase.auth().currentUser;
     chatwith=uid;
@@ -397,23 +407,23 @@
       } else {
         Ref=db.collection("Chats").doc(user.uid+uid);
       }
-      db.collection("Users").doc(user.uid).get().then(function(mydoc) {
-        if(mydoc.data().hasOwnProperty("alerts")) {
-          var alert_list=mydoc.data()["alerts"];
-          var obj=JSON.stringify({
-            name: user.displayName,
-            uid: user.uid
-          })
-          if(alert_list.includes(obj)) {
-            alert_list.remove(obj);
-            db.collection("Users").doc(uid).set({
-              alerts:alert_list
-            }, {merge:true})
-          }
-        }
-      });
       db.collection("Users").doc(uid).get().then(function(doc) {
         $("#chat_name").html(doc.data()["username"]);
+        db.collection("Users").doc(user.uid).get().then(function(mydoc) {
+          if(mydoc.data().hasOwnProperty("alerts")) {
+            var alert_list=mydoc.data()["alerts"];
+            var obj=JSON.stringify({
+              name: doc.data()["username"],
+              uid: uid
+            })
+            if(alert_list.includes(obj)) {
+              removeA(alert_list,obj);
+              db.collection("Users").doc(uid).set({
+                alerts:alert_list
+              }, {merge:true})
+            }
+          }
+        });
         Ref.onSnapshot(function(snapshot) {
           var msg_list=snapshot.data()["messages"];
           var MSGS="";
@@ -495,7 +505,12 @@
         if(user.photoURL=="Student") {
           $("#createSubgroup").css({'display':'none'});
         }
-        $("#SignInandSetting").html(user.displayName);
+        db.collection("Users").doc(user.uid).get.then(function(doc) {
+          if(doc.data().hasOwnProperty("alerts")) $("#SignInandSetting").html(user.displayName+"<span class=\"badge badge-warning ml-2\">"+doc.data()["alerts"].length+"</span>");
+          else $("#SignInandSetting").html(user.displayName+"<span class=\"badge badge-warning ml-2>0</span>");
+        });
+
+
         var classid=Cookies.get('_classid');
         $("#settings_classid").html(classid);
         db.collection('Classes').doc(classid).get().then(function(doc) {
