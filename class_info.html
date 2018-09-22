@@ -272,6 +272,10 @@
     var article_content=$(".note-editable").html();
     var user=firebase.auth().currentUser;
     var article_title=$("#board_title").val();
+    if(article_title=="") {
+      alert("Please write title!!!");
+      return;
+    }
     var today = new Date();
     var article_data={
       title:article_title,
