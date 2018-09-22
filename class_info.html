@@ -489,11 +489,13 @@
             }
             if(i===doc.data()["members"]["StudentName"].length-1) $("#members_student").html(TBLE2);
           }
-          for(var i=0;i<doc.data()["articles"].reverse().length;i++) {
-            TBLE3=TBLE3+"<tr><th scope=\"row\">"+(doc.data()["articles"].reverse().length-i).toString()+"</th><td><button class='btn btn-link py-0' onclick='article_view("+i.toString()+")'>"+doc.data()["articles"].reverse()[i]["title"]
-            +"</button></td><td>"+doc.data()["articles"].reverse()[i]["writer"]+"</td>"
-            +"</td><td>"+doc.data()["articles"].reverse()[i]["date"]+"</td>";
-            if(i===doc.data()["articles"].reverse().length-1) $("#board_tbody").html(TBLE3);
+          if(doc.data().hasOwnProperty("articles")) {
+            for(var i=0;i<doc.data()["articles"].reverse().length;i++) {
+              TBLE3=TBLE3+"<tr><th scope=\"row\">"+(doc.data()["articles"].reverse().length-i).toString()+"</th><td><button class='btn btn-link py-0' onclick='article_view("+i.toString()+")'>"+doc.data()["articles"].reverse()[i]["title"]
+              +"</button></td><td>"+doc.data()["articles"].reverse()[i]["writer"]+"</td>"
+              +"</td><td>"+doc.data()["articles"].reverse()[i]["date"]+"</td>";
+              if(i===doc.data()["articles"].reverse().length-1) $("#board_tbody").html(TBLE3);
+            }
           }
           getClassList(function(k) {
             getTable(k, function(tbl) {
