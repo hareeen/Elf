@@ -62,6 +62,7 @@
         <div class="alert alert-danger mb-3" role="alert" id="verifyAlert" style="display:none;">
           Your email is not verified. Click <a href="#" class="alert-link" id="sendverifyEmail">here</a> to verify your email.
         </div>
+        <button type="button" class="btn btn-dark btn-block mb-3" id="AlertButton">Alerts</button>
         <button type="button" class="btn btn-dark btn-block mb-3" id="SignoutButton">Sign Out</button>
         <button type="button" class="btn btn-danger btn-block" id="DelUserButton">Delete User</button>
       </div>
@@ -100,6 +101,10 @@
         $("#verifyAlert").attr('style', '');
       } else {
         $("#LearnorTeach").html(user.photoURL+" <span class='badge badge-success'>Verified</span>");
+        db.collection("Users").doc(user.uid).get().then(function(doc) {
+          if(doc.data().hasOwnProperty("alerts")) $("#AlertButton").html("Alerts<span class=\"badge badge-light ml-2\">"+doc.data()["alerts"].length+"</span>");
+          else $("#AlertButton").html("Alerts<span class=\"badge badge-light ml-2\" id=\"AlertSpan\">0</span>");
+        });
       }
     } else {
       if (signout === 0) {
@@ -143,14 +148,9 @@
     });
   });
   $("#SignoutButton").click(function() {
-    signout = Math.floor(Math.random() * 2)
-    if (signout === 1) {
-      firebase.auth().signOut();
-      alert("You are lucky. Sign out complete. ");
-      window.location.replace("index.html")
-    } else {
-      alert("Sorry. Sign out incomplete. Please try again.")
-    }
+    firebase.auth().signOut();
+    alert("Sign out complete.");
+    window.location.replace("index.html")
   });
 </script>
 
