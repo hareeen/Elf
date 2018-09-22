@@ -190,7 +190,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary" id="RealBd">Confirm</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" id="RealBd">Confirm</button>
         </div>
       </div>
     </div>
@@ -218,7 +218,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Chat with <strong id="chat_name"></strong></h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="chat_exit">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -264,6 +264,9 @@
       height: 400
     });
     $("#BoardModal").modal();
+  });
+  $("#chat_exit").click(function() {
+    $("#chat_body").html("");
   });
   $("#RealBd").click(function() {
     var article_content=$(".note-editable").html();
