@@ -403,11 +403,11 @@
           if(alert_list.includes({
             name: user.displayName,
             uid: user.uid
-          })) {
+          }.stringify())) {
             alert_list.remove({
               name: user.displayName,
               uid: user.uid
-            });
+            }.stringify());
             db.collection("Users").doc(uid).set({
               alerts:alert_list
             }, {merge:true})
@@ -467,17 +467,17 @@
           if(!alert_list.includes({
             name: user.displayName,
             uid: user.uid
-          })) {
+          }.stringify())) {
             alert_list.push({
               name: user.displayName,
               uid: user.uid
-            });
+            }.stringify());
           }
         } else {
           alert_list.push({
             name: user.displayName,
             uid: user.uid
-          });
+          }.stringify());
         }
         db.collection("Users").doc(chatwith).set({
           alerts:alert_list
