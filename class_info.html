@@ -400,14 +400,12 @@
       db.collection("Users").doc(user.uid).get().then(function(mydoc) {
         if(mydoc.data().hasOwnProperty("alerts")) {
           var alert_list=mydoc.data()["alerts"];
-          if(alert_list.includes({
+          var obj=JSON.stringify({
             name: user.displayName,
             uid: user.uid
-          }.stringify())) {
-            alert_list.remove({
-              name: user.displayName,
-              uid: user.uid
-            }.stringify());
+          })
+          if(alert_list.includes(var)) {
+            alert_list.remove(var);
             db.collection("Users").doc(uid).set({
               alerts:alert_list
             }, {merge:true})
@@ -464,20 +462,15 @@
         var alert_list=[];
         if(doc.data().hasOwnProperty("alerts")) {
           var alert_list=doc.data()["alerts"];
-          if(!alert_list.includes({
+          var obj=JSON.stringify({
             name: user.displayName,
             uid: user.uid
-          }.stringify())) {
-            alert_list.push({
-              name: user.displayName,
-              uid: user.uid
-            }.stringify());
+          })
+          if(!alert_list.includes(obj)) {
+            alert_list.push(obj);
           }
         } else {
-          alert_list.push({
-            name: user.displayName,
-            uid: user.uid
-          }.stringify());
+          alert_list.push(obj);
         }
         db.collection("Users").doc(chatwith).set({
           alerts:alert_list
