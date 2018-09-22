@@ -418,7 +418,7 @@
             })
             if(alert_list.includes(obj)) {
               removeA(alert_list,obj);
-              db.collection("Users").doc(uid).set({
+              db.collection("Users").doc(user.uid).set({
                 alerts:alert_list
               }, {merge:true})
             }
@@ -505,7 +505,7 @@
         if(user.photoURL=="Student") {
           $("#createSubgroup").css({'display':'none'});
         }
-        db.collection("Users").doc(user.uid).get.then(function(doc) {
+        db.collection("Users").doc(user.uid).get().then(function(doc) {
           if(doc.data().hasOwnProperty("alerts")) $("#SignInandSetting").html(user.displayName+"<span class=\"badge badge-warning ml-2\">"+doc.data()["alerts"].length+"</span>");
           else $("#SignInandSetting").html(user.displayName+"<span class=\"badge badge-warning ml-2>0</span>");
         });

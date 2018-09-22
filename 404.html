@@ -23,6 +23,11 @@
       messagingSenderId: "550791088476"
     };
     firebase.initializeApp(config);
+    var db = firebase.firestore();
+    const settings = {
+      timestampsInSnapshots: true
+    };
+    db.settings(settings);
   </script>
   <title>Elf</title>
 </head>
@@ -77,7 +82,10 @@
   });
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-      $("#SignInandSetting").html(user.displayName);
+      db.collection("Users").doc(user.uid).get().then(function(doc) {
+        if(doc.data().hasOwnProperty("alerts")) $("#SignInandSetting").html(user.displayName+"<span class=\"badge badge-warning ml-2\">"+doc.data()["alerts"].length+"</span>");
+        else $("#SignInandSetting").html(user.displayName+"<span class=\"badge badge-warning ml-2>0</span>");
+      });
     } else {
       // No user is signed in.
     }
