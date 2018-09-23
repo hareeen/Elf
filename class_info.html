@@ -84,7 +84,7 @@
                   <th scope="col">#</th>
                   <th scope="col">Title</th>
                   <th scope="col">Writer</th>
-                  <th scope="col">Time</th>
+                  <th scope="col">Date</th>
                 </tr>
               </thead>
               <tbody id="board_tbody">
@@ -190,7 +190,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary" data-dismiss="modal" id="RealBd">Confirm</button>
+          <button type="button" class="btn btn-primary" id="RealBd">Confirm</button>
         </div>
       </div>
     </div>
@@ -275,6 +275,11 @@
     var article_content=$(".note-editable").html();
     var user=firebase.auth().currentUser;
     var article_title=$("#board_title").val();
+    if(user.photoURL=="Student") {
+      alert("Student can't write article.");
+      $("#BoardModal").modal('hide');
+      return;
+    }
     if(article_title=="") {
       alert("Please write title!!!");
       return;
@@ -301,6 +306,9 @@
         $('#myModal').modal('hide');
         $(".note-editable").html('');
         $("#board_title").val('');
+      }).then(function(){
+        alert("Article has written.")
+        $("#BoardModal").modal('hide');
       });
     }).catch(function(error) {
       var errorMessage = error.message;
@@ -511,6 +519,7 @@
       if(Cookies.get('_classid')) {
         if(user.photoURL=="Student") {
           $("#createSubgroup").css({'display':'none'});
+          $("#board_newarticle").css({'display':'none'});
         }
         db.collection("Users").doc(user.uid).get().then(function(doc) {
           if(doc.data().hasOwnProperty("alerts")) $("#SignInandSetting").html(user.displayName+"<span class=\"badge badge-warning ml-2\">"+doc.data()["alerts"].length+"</span>");

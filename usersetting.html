@@ -64,7 +64,7 @@
         </div>
         <button type="button" class="btn btn-dark btn-block mb-3" id="AlertButton">Alerts</button>
         <button type="button" class="btn btn-dark btn-block mb-3" id="SignoutButton">Sign Out</button>
-        <button type="button" class="btn btn-danger btn-block" id="DelUserButton">Delete User</button>
+        <button type="button" class="btn btn-outline-danger btn-block" id="DelUserButton">Delete User</button>
       </div>
       <div class="col"></div>
     </div>
@@ -133,6 +133,9 @@
   </div>
 </body>
 <script type="text/javascript">
+  $('#chat_input').keyup(function(e) {
+    if (e.keyCode === 13) $("#chat_send").click();
+  });
   var chatwith;
   function removeA(arr) {
     var what, a = arguments, L = a.length, ax;
