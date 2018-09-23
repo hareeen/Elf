@@ -257,6 +257,9 @@
   </div>
 </body>
 <script type="text/javascript">
+  $('#chat_input').keyup(function(e) {
+    if (e.keyCode === 13) $("#chat_send").click();
+  });
   $("#board_newarticle").click(function() {
     $('#summernote').summernote({
       placeholder: 'Write..',
@@ -619,31 +622,6 @@
       });
     }
   }
-  /*
-  $("#nav_board").click(function() {
-    $("#nav_board").attr('class', 'nav-item nav-link active');
-    $("#nav_members").attr('class', 'nav-item nav-link');
-    $("#nav_subgroups").attr('class', 'nav-item nav-link');
-    $("#nav_settings").attr('class', 'nav-item nav-link');
-  });
-  $("#nav_members").click(function() {
-    $("#nav_board").attr('class', 'nav-item nav-link');
-    $("#nav_members").attr('class', 'nav-item nav-link active');
-    $("#nav_subgroups").attr('class', 'nav-item nav-link');
-    $("#nav_settings").attr('class', 'nav-item nav-link');
-  });
-  $("#nav_subgroups").click(function() {
-    $("#nav_board").attr('class', 'nav-item nav-link');
-    $("#nav_members").attr('class', 'nav-item nav-link');
-    $("#nav_subgroups").attr('class', 'nav-item nav-link active');
-    $("#nav_settings").attr('class', 'nav-item nav-link');
-  });
-  $("#nav_settings").click(function() {
-    $("#nav_board").attr('class', 'nav-item nav-link');
-    $("#nav_members").attr('class', 'nav-item nav-link');
-    $("#nav_subgroups").attr('class', 'nav-item nav-link');
-    $("#nav_settings").attr('class', 'nav-item nav-link active');
-  });*/
 </script>
 
 </html>
